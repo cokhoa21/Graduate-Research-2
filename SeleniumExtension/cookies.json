@@ -1,0 +1,70 @@
+[
+  {
+    "name": "_ga",
+    "value": "GA1.1.1341648563.1746807818",
+    "domain": ".hust.edu.vn",
+    "path": "/",
+    "secure": false,
+    "httpOnly": false,
+    "expiry": 1781367817,
+    "sameSite": "Lax",
+    "source": "selenium",
+    "timestamp": "2025-05-09T23:23:51.289434"
+  },
+  {
+    "name": "_ga_CWFTHLQHPT",
+    "value": "GS2.1.s1746807817$o1$g0$t1746807817$j0$l0$h0",
+    "domain": ".hust.edu.vn",
+    "path": "/",
+    "secure": false,
+    "httpOnly": false,
+    "expiry": 1781367817,
+    "sameSite": "Lax",
+    "source": "selenium",
+    "timestamp": "2025-05-09T23:23:51.289461"
+  },
+  {
+    "name": "JSESSIONID",
+    "value": "LsNZxOfGCbv1WcbZ_UkLMA.node0",
+    "domain": "qldt.hust.edu.vn",
+    "path": "/",
+    "secure": true,
+    "httpOnly": true,
+    "expiry": null,
+    "sameSite": "Lax",
+    "source": "selenium",
+    "timestamp": "2025-05-09T23:23:51.289465"
+  },
+  {
+    "domain": ".hust.edu.vn",
+    "expiry": 1781367817,
+    "httpOnly": false,
+    "name": "_ga",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "GA1.1.1341648563.1746807818",
+    "source": "iframe"
+  },
+  {
+    "domain": ".hust.edu.vn",
+    "expiry": 1781367817,
+    "httpOnly": false,
+    "name": "_ga_CWFTHLQHPT",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "GS2.1.s1746807817$o1$g0$t1746807817$j0$l0$h0",
+    "source": "iframe"
+  },
+  {
+    "domain": "qldt.hust.edu.vn",
+    "httpOnly": true,
+    "name": "JSESSIONID",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": true,
+    "value": "LsNZxOfGCbv1WcbZ_UkLMA.node0",
+    "source": "iframe"
+  }
+]

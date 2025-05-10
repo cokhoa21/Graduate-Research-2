@@ -1,0 +1,26 @@
+{
+    "manifest_version": 3,
+    "name": "Cookie Risk Prediction Tool",
+    "version": "1.0",
+    "description": "Outil d'extraction et analyse de risque des cookies",
+    "permissions": [
+        "cookies",
+        "activeTab",
+        "scripting",
+        "storage"
+    ],
+    "host_permissions": [
+        "<all_urls>"
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "images/icon16.jpg",
+            "48": "images/icon48.jpg",
+            "128": "images/icon128.jpg"
+        }
+    },
+    "background": {
+        "service_worker": "background.js"
+    }
+}

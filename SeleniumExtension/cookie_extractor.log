@@ -1,0 +1,513 @@
+2025-05-09 23:13:05,700 - ERROR - Error setting up Chrome driver: ChromeDriverManager.__init__() got an unexpected keyword argument 'version'
+2025-05-09 23:13:22,397 - ERROR - Error setting up Chrome driver: ChromeDriverManager.__init__() got an unexpected keyword argument 'version'
+2025-05-09 23:14:18,663 - INFO - ====== WebDriver manager ======
+2025-05-09 23:14:19,209 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-09 23:14:19,471 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-09 23:14:19,680 - INFO - Driver [/Users/macbook/.wdm/drivers/chromedriver/mac64/136.0.7103.92/chromedriver-mac-x64/THIRD_PARTY_NOTICES.chromedriver] found in cache
+2025-05-09 23:14:19,686 - ERROR - Error setting up Chrome driver: [Errno 8] Exec format error: '/Users/macbook/.wdm/drivers/chromedriver/mac64/136.0.7103.92/chromedriver-mac-x64/THIRD_PARTY_NOTICES.chromedriver'
+2025-05-09 23:15:06,460 - INFO - ====== WebDriver manager ======
+2025-05-09 23:15:06,655 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-09 23:15:06,863 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-09 23:15:07,105 - INFO - Driver [/Users/macbook/.wdm/drivers/chromedriver/mac64/136.0.7103.92/chromedriver-mac-x64/THIRD_PARTY_NOTICES.chromedriver] found in cache
+2025-05-09 23:15:07,110 - ERROR - Error setting up Chrome driver: [Errno 8] Exec format error: '/Users/macbook/.wdm/drivers/chromedriver/mac64/136.0.7103.92/chromedriver-mac-x64/THIRD_PARTY_NOTICES.chromedriver'
+2025-05-09 23:15:07,111 - INFO - Attempting alternative setup for macOS...
+2025-05-09 23:15:10,397 - ERROR - Error setting up cookie monitoring: Message: invalid argument: Sanitizing cookie failed
+  (Session info: chrome=136.0.7103.93)
+Stacktrace:
+0   chromedriver                        0x00000001085378b8 chromedriver + 5986488
+1   chromedriver                        0x000000010852e9ea chromedriver + 5949930
+2   chromedriver                        0x0000000107fe7600 chromedriver + 415232
+3   chromedriver                        0x0000000107fce312 chromedriver + 312082
+4   chromedriver                        0x0000000107fcce98 chromedriver + 306840
+5   chromedriver                        0x0000000107fcd5ff chromedriver + 308735
+6   chromedriver                        0x0000000107fcd554 chromedriver + 308564
+7   chromedriver                        0x0000000107feb87f chromedriver + 432255
+8   chromedriver                        0x0000000108092c3a chromedriver + 1117242
+9   chromedriver                        0x000000010805f312 chromedriver + 906002
+10  chromedriver                        0x0000000108086566 chromedriver + 1066342
+11  chromedriver                        0x000000010805f0e3 chromedriver + 905443
+12  chromedriver                        0x000000010802b61d chromedriver + 693789
+13  chromedriver                        0x000000010802c281 chromedriver + 696961
+14  chromedriver                        0x00000001084f5580 chromedriver + 5715328
+15  chromedriver                        0x00000001084f9445 chromedriver + 5731397
+16  chromedriver                        0x00000001084cfed0 chromedriver + 5562064
+17  chromedriver                        0x00000001084f9e7b chromedriver + 5734011
+18  chromedriver                        0x00000001084bede4 chromedriver + 5492196
+19  chromedriver                        0x000000010851ca98 chromedriver + 5876376
+20  chromedriver                        0x000000010851cc60 chromedriver + 5876832
+21  chromedriver                        0x000000010852e5b1 chromedriver + 5948849
+22  libsystem_pthread.dylib             0x00007ff81b51818b _pthread_start + 99
+23  libsystem_pthread.dylib             0x00007ff81b513ae3 thread_start + 15
+
+2025-05-09 23:15:29,570 - INFO - Extracted 4 cookies and saved to cookies.json
+2025-05-09 23:17:37,655 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8888
+ * Running on http://192.168.0.101:8888
+2025-05-09 23:17:37,656 - INFO - [33mPress CTRL+C to quit[0m
+2025-05-09 23:23:20,005 - INFO - ====== WebDriver manager ======
+2025-05-09 23:23:20,504 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-09 23:23:21,026 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-09 23:23:21,278 - INFO - Driver [/Users/macbook/.wdm/drivers/chromedriver/mac64/136.0.7103.92/chromedriver-mac-x64/THIRD_PARTY_NOTICES.chromedriver] found in cache
+2025-05-09 23:23:21,283 - ERROR - Error setting up Chrome driver: [Errno 8] Exec format error: '/Users/macbook/.wdm/drivers/chromedriver/mac64/136.0.7103.92/chromedriver-mac-x64/THIRD_PARTY_NOTICES.chromedriver'
+2025-05-09 23:23:21,284 - INFO - Attempting alternative setup for macOS...
+2025-05-09 23:23:24,651 - ERROR - Error setting up cookie monitoring: Message: invalid argument: Sanitizing cookie failed
+  (Session info: chrome=136.0.7103.93)
+Stacktrace:
+0   chromedriver                        0x0000000107ded8b8 chromedriver + 5986488
+1   chromedriver                        0x0000000107de49ea chromedriver + 5949930
+2   chromedriver                        0x000000010789d600 chromedriver + 415232
+3   chromedriver                        0x0000000107884312 chromedriver + 312082
+4   chromedriver                        0x0000000107882e98 chromedriver + 306840
+5   chromedriver                        0x00000001078835ff chromedriver + 308735
+6   chromedriver                        0x0000000107883554 chromedriver + 308564
+7   chromedriver                        0x00000001078a187f chromedriver + 432255
+8   chromedriver                        0x0000000107948c3a chromedriver + 1117242
+9   chromedriver                        0x0000000107915312 chromedriver + 906002
+10  chromedriver                        0x000000010793c566 chromedriver + 1066342
+11  chromedriver                        0x00000001079150e3 chromedriver + 905443
+12  chromedriver                        0x00000001078e161d chromedriver + 693789
+13  chromedriver                        0x00000001078e2281 chromedriver + 696961
+14  chromedriver                        0x0000000107dab580 chromedriver + 5715328
+15  chromedriver                        0x0000000107daf445 chromedriver + 5731397
+16  chromedriver                        0x0000000107d85ed0 chromedriver + 5562064
+17  chromedriver                        0x0000000107dafe7b chromedriver + 5734011
+18  chromedriver                        0x0000000107d74de4 chromedriver + 5492196
+19  chromedriver                        0x0000000107dd2a98 chromedriver + 5876376
+20  chromedriver                        0x0000000107dd2c60 chromedriver + 5876832
+21  chromedriver                        0x0000000107de45b1 chromedriver + 5948849
+22  libsystem_pthread.dylib             0x00007ff81b51818b _pthread_start + 99
+23  libsystem_pthread.dylib             0x00007ff81b513ae3 thread_start + 15
+
+2025-05-09 23:23:51,292 - INFO - Extracted 6 cookies and saved to cookies.json
+2025-05-09 23:49:31,090 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.101:5000
+2025-05-09 23:49:31,093 - INFO - [33mPress CTRL+C to quit[0m
+2025-05-09 23:49:38,379 - INFO - ====== WebDriver manager ======
+2025-05-09 23:49:38,944 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-09 23:49:39,236 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-09 23:49:39,470 - INFO - Driver [/Users/macbook/.wdm/drivers/chromedriver/mac64/136.0.7103.92/chromedriver-mac-x64/THIRD_PARTY_NOTICES.chromedriver] found in cache
+2025-05-09 23:49:39,477 - ERROR - Error setting up Chrome driver: [Errno 8] Exec format error: '/Users/macbook/.wdm/drivers/chromedriver/mac64/136.0.7103.92/chromedriver-mac-x64/THIRD_PARTY_NOTICES.chromedriver'
+2025-05-09 23:49:39,477 - INFO - Attempting alternative setup for macOS...
+2025-05-09 23:49:41,022 - ERROR - Error setting up cookie monitoring: Message: invalid argument: Sanitizing cookie failed
+  (Session info: chrome=136.0.7103.93)
+Stacktrace:
+0   chromedriver                        0x00000001063a18b8 chromedriver + 5986488
+1   chromedriver                        0x00000001063989ea chromedriver + 5949930
+2   chromedriver                        0x0000000105e51600 chromedriver + 415232
+3   chromedriver                        0x0000000105e38312 chromedriver + 312082
+4   chromedriver                        0x0000000105e36e98 chromedriver + 306840
+5   chromedriver                        0x0000000105e375ff chromedriver + 308735
+6   chromedriver                        0x0000000105e37554 chromedriver + 308564
+7   chromedriver                        0x0000000105e5587f chromedriver + 432255
+8   chromedriver                        0x0000000105efcc3a chromedriver + 1117242
+9   chromedriver                        0x0000000105ec9312 chromedriver + 906002
+10  chromedriver                        0x0000000105ef0566 chromedriver + 1066342
+11  chromedriver                        0x0000000105ec90e3 chromedriver + 905443
+12  chromedriver                        0x0000000105e9561d chromedriver + 693789
+13  chromedriver                        0x0000000105e96281 chromedriver + 696961
+14  chromedriver                        0x000000010635f580 chromedriver + 5715328
+15  chromedriver                        0x0000000106363445 chromedriver + 5731397
+16  chromedriver                        0x0000000106339ed0 chromedriver + 5562064
+17  chromedriver                        0x0000000106363e7b chromedriver + 5734011
+18  chromedriver                        0x0000000106328de4 chromedriver + 5492196
+19  chromedriver                        0x0000000106386a98 chromedriver + 5876376
+20  chromedriver                        0x0000000106386c60 chromedriver + 5876832
+21  chromedriver                        0x00000001063985b1 chromedriver + 5948849
+22  libsystem_pthread.dylib             0x00007ff81b51818b _pthread_start + 99
+23  libsystem_pthread.dylib             0x00007ff81b513ae3 thread_start + 15
+
+2025-05-09 23:49:50,182 - INFO - 127.0.0.1 - - [09/May/2025 23:49:50] "POST /extract_cookies HTTP/1.1" 200 -
+2025-05-09 23:54:23,138 - INFO - ====== WebDriver manager ======
+2025-05-09 23:54:23,643 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-09 23:54:23,840 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-09 23:54:24,053 - INFO - Driver [/Users/macbook/.wdm/drivers/chromedriver/mac64/136.0.7103.92/chromedriver-mac-x64/THIRD_PARTY_NOTICES.chromedriver] found in cache
+2025-05-09 23:54:24,059 - ERROR - Error setting up Chrome driver: [Errno 8] Exec format error: '/Users/macbook/.wdm/drivers/chromedriver/mac64/136.0.7103.92/chromedriver-mac-x64/THIRD_PARTY_NOTICES.chromedriver'
+2025-05-09 23:54:24,060 - INFO - Attempting alternative setup for macOS...
+2025-05-09 23:54:25,699 - ERROR - Error setting up cookie monitoring: Message: invalid argument: Sanitizing cookie failed
+  (Session info: chrome=136.0.7103.93)
+Stacktrace:
+0   chromedriver                        0x000000010a5538b8 chromedriver + 5986488
+1   chromedriver                        0x000000010a54a9ea chromedriver + 5949930
+2   chromedriver                        0x000000010a003600 chromedriver + 415232
+3   chromedriver                        0x0000000109fea312 chromedriver + 312082
+4   chromedriver                        0x0000000109fe8e98 chromedriver + 306840
+5   chromedriver                        0x0000000109fe95ff chromedriver + 308735
+6   chromedriver                        0x0000000109fe9554 chromedriver + 308564
+7   chromedriver                        0x000000010a00787f chromedriver + 432255
+8   chromedriver                        0x000000010a0aec3a chromedriver + 1117242
+9   chromedriver                        0x000000010a07b312 chromedriver + 906002
+10  chromedriver                        0x000000010a0a2566 chromedriver + 1066342
+11  chromedriver                        0x000000010a07b0e3 chromedriver + 905443
+12  chromedriver                        0x000000010a04761d chromedriver + 693789
+13  chromedriver                        0x000000010a048281 chromedriver + 696961
+14  chromedriver                        0x000000010a511580 chromedriver + 5715328
+15  chromedriver                        0x000000010a515445 chromedriver + 5731397
+16  chromedriver                        0x000000010a4ebed0 chromedriver + 5562064
+17  chromedriver                        0x000000010a515e7b chromedriver + 5734011
+18  chromedriver                        0x000000010a4dade4 chromedriver + 5492196
+19  chromedriver                        0x000000010a538a98 chromedriver + 5876376
+20  chromedriver                        0x000000010a538c60 chromedriver + 5876832
+21  chromedriver                        0x000000010a54a5b1 chromedriver + 5948849
+22  libsystem_pthread.dylib             0x00007ff81b51818b _pthread_start + 99
+23  libsystem_pthread.dylib             0x00007ff81b513ae3 thread_start + 15
+
+2025-05-09 23:54:34,796 - INFO - 127.0.0.1 - - [09/May/2025 23:54:34] "POST /extract_cookies HTTP/1.1" 200 -
+2025-05-09 23:55:44,550 - INFO - ====== WebDriver manager ======
+2025-05-09 23:55:44,824 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-09 23:55:45,089 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-09 23:55:45,354 - INFO - Driver [/Users/macbook/.wdm/drivers/chromedriver/mac64/136.0.7103.92/chromedriver-mac-x64/THIRD_PARTY_NOTICES.chromedriver] found in cache
+2025-05-09 23:55:45,359 - ERROR - Error setting up Chrome driver: [Errno 8] Exec format error: '/Users/macbook/.wdm/drivers/chromedriver/mac64/136.0.7103.92/chromedriver-mac-x64/THIRD_PARTY_NOTICES.chromedriver'
+2025-05-09 23:55:45,359 - INFO - Attempting alternative setup for macOS...
+2025-05-09 23:55:46,457 - ERROR - Error setting up cookie monitoring: Message: invalid argument: Sanitizing cookie failed
+  (Session info: chrome=136.0.7103.93)
+Stacktrace:
+0   chromedriver                        0x000000010e19a8b8 chromedriver + 5986488
+1   chromedriver                        0x000000010e1919ea chromedriver + 5949930
+2   chromedriver                        0x000000010dc4a600 chromedriver + 415232
+3   chromedriver                        0x000000010dc31312 chromedriver + 312082
+4   chromedriver                        0x000000010dc2fe98 chromedriver + 306840
+5   chromedriver                        0x000000010dc305ff chromedriver + 308735
+6   chromedriver                        0x000000010dc30554 chromedriver + 308564
+7   chromedriver                        0x000000010dc4e87f chromedriver + 432255
+8   chromedriver                        0x000000010dcf5c3a chromedriver + 1117242
+9   chromedriver                        0x000000010dcc2312 chromedriver + 906002
+10  chromedriver                        0x000000010dce9566 chromedriver + 1066342
+11  chromedriver                        0x000000010dcc20e3 chromedriver + 905443
+12  chromedriver                        0x000000010dc8e61d chromedriver + 693789
+13  chromedriver                        0x000000010dc8f281 chromedriver + 696961
+14  chromedriver                        0x000000010e158580 chromedriver + 5715328
+15  chromedriver                        0x000000010e15c445 chromedriver + 5731397
+16  chromedriver                        0x000000010e132ed0 chromedriver + 5562064
+17  chromedriver                        0x000000010e15ce7b chromedriver + 5734011
+18  chromedriver                        0x000000010e121de4 chromedriver + 5492196
+19  chromedriver                        0x000000010e17fa98 chromedriver + 5876376
+20  chromedriver                        0x000000010e17fc60 chromedriver + 5876832
+21  chromedriver                        0x000000010e1915b1 chromedriver + 5948849
+22  libsystem_pthread.dylib             0x00007ff81b51818b _pthread_start + 99
+23  libsystem_pthread.dylib             0x00007ff81b513ae3 thread_start + 15
+
+2025-05-09 23:56:00,701 - INFO - 127.0.0.1 - - [09/May/2025 23:56:00] "POST /extract_cookies HTTP/1.1" 200 -
+2025-05-09 23:56:36,356 - INFO - ====== WebDriver manager ======
+2025-05-09 23:56:36,627 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-09 23:56:36,836 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-09 23:56:37,027 - INFO - Driver [/Users/macbook/.wdm/drivers/chromedriver/mac64/136.0.7103.92/chromedriver-mac-x64/THIRD_PARTY_NOTICES.chromedriver] found in cache
+2025-05-09 23:56:37,033 - ERROR - Error setting up Chrome driver: [Errno 8] Exec format error: '/Users/macbook/.wdm/drivers/chromedriver/mac64/136.0.7103.92/chromedriver-mac-x64/THIRD_PARTY_NOTICES.chromedriver'
+2025-05-09 23:56:37,034 - INFO - Attempting alternative setup for macOS...
+2025-05-09 23:56:38,129 - ERROR - Error setting up cookie monitoring: Message: invalid argument: Sanitizing cookie failed
+  (Session info: chrome=136.0.7103.93)
+Stacktrace:
+0   chromedriver                        0x000000010aa888b8 chromedriver + 5986488
+1   chromedriver                        0x000000010aa7f9ea chromedriver + 5949930
+2   chromedriver                        0x000000010a538600 chromedriver + 415232
+3   chromedriver                        0x000000010a51f312 chromedriver + 312082
+4   chromedriver                        0x000000010a51de98 chromedriver + 306840
+5   chromedriver                        0x000000010a51e5ff chromedriver + 308735
+6   chromedriver                        0x000000010a51e554 chromedriver + 308564
+7   chromedriver                        0x000000010a53c87f chromedriver + 432255
+8   chromedriver                        0x000000010a5e3c3a chromedriver + 1117242
+9   chromedriver                        0x000000010a5b0312 chromedriver + 906002
+10  chromedriver                        0x000000010a5d7566 chromedriver + 1066342
+11  chromedriver                        0x000000010a5b00e3 chromedriver + 905443
+12  chromedriver                        0x000000010a57c61d chromedriver + 693789
+13  chromedriver                        0x000000010a57d281 chromedriver + 696961
+14  chromedriver                        0x000000010aa46580 chromedriver + 5715328
+15  chromedriver                        0x000000010aa4a445 chromedriver + 5731397
+16  chromedriver                        0x000000010aa20ed0 chromedriver + 5562064
+17  chromedriver                        0x000000010aa4ae7b chromedriver + 5734011
+18  chromedriver                        0x000000010aa0fde4 chromedriver + 5492196
+19  chromedriver                        0x000000010aa6da98 chromedriver + 5876376
+20  chromedriver                        0x000000010aa6dc60 chromedriver + 5876832
+21  chromedriver                        0x000000010aa7f5b1 chromedriver + 5948849
+22  libsystem_pthread.dylib             0x00007ff81b51818b _pthread_start + 99
+23  libsystem_pthread.dylib             0x00007ff81b513ae3 thread_start + 15
+
+2025-05-09 23:56:48,609 - INFO - 127.0.0.1 - - [09/May/2025 23:56:48] "POST /extract_cookies HTTP/1.1" 200 -
+2025-05-10 00:02:37,560 - INFO - ====== WebDriver manager ======
+2025-05-10 00:02:38,055 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-10 00:02:38,281 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-10 00:02:38,546 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-10 00:02:39,553 - INFO - WebDriver version 136.0.7103.92 selected
+2025-05-10 00:02:39,558 - INFO - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/136.0.7103.92/mac-x64/chromedriver-mac-x64.zip
+2025-05-10 00:02:39,558 - INFO - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/136.0.7103.92/mac-x64/chromedriver-mac-x64.zip
+2025-05-10 00:02:39,747 - INFO - Driver downloading response is 200
+2025-05-10 00:03:00,646 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-10 00:03:01,010 - INFO - Driver has been saved in cache [/Users/macbook/.wdm/drivers/chromedriver/mac64/136.0.7103.92]
+2025-05-10 00:03:01,019 - ERROR - Error setting up Chrome driver: [Errno 8] Exec format error: '/Users/macbook/.wdm/drivers/chromedriver/mac64/136.0.7103.92/chromedriver-mac-x64/THIRD_PARTY_NOTICES.chromedriver'
+2025-05-10 00:03:01,020 - INFO - Attempting alternative setup for macOS...
+2025-05-10 00:03:02,709 - ERROR - Error setting up cookie monitoring: Message: invalid argument: Sanitizing cookie failed
+  (Session info: chrome=136.0.7103.93)
+Stacktrace:
+0   chromedriver                        0x00000001042f38b8 chromedriver + 5986488
+1   chromedriver                        0x00000001042ea9ea chromedriver + 5949930
+2   chromedriver                        0x0000000103da3600 chromedriver + 415232
+3   chromedriver                        0x0000000103d8a312 chromedriver + 312082
+4   chromedriver                        0x0000000103d88e98 chromedriver + 306840
+5   chromedriver                        0x0000000103d895ff chromedriver + 308735
+6   chromedriver                        0x0000000103d89554 chromedriver + 308564
+7   chromedriver                        0x0000000103da787f chromedriver + 432255
+8   chromedriver                        0x0000000103e4ec3a chromedriver + 1117242
+9   chromedriver                        0x0000000103e1b312 chromedriver + 906002
+10  chromedriver                        0x0000000103e42566 chromedriver + 1066342
+11  chromedriver                        0x0000000103e1b0e3 chromedriver + 905443
+12  chromedriver                        0x0000000103de761d chromedriver + 693789
+13  chromedriver                        0x0000000103de8281 chromedriver + 696961
+14  chromedriver                        0x00000001042b1580 chromedriver + 5715328
+15  chromedriver                        0x00000001042b5445 chromedriver + 5731397
+16  chromedriver                        0x000000010428bed0 chromedriver + 5562064
+17  chromedriver                        0x00000001042b5e7b chromedriver + 5734011
+18  chromedriver                        0x000000010427ade4 chromedriver + 5492196
+19  chromedriver                        0x00000001042d8a98 chromedriver + 5876376
+20  chromedriver                        0x00000001042d8c60 chromedriver + 5876832
+21  chromedriver                        0x00000001042ea5b1 chromedriver + 5948849
+22  libsystem_pthread.dylib             0x00007ff81b51818b _pthread_start + 99
+23  libsystem_pthread.dylib             0x00007ff81b513ae3 thread_start + 15
+
+2025-05-10 00:03:12,855 - INFO - 127.0.0.1 - - [10/May/2025 00:03:12] "POST /extract_cookies HTTP/1.1" 200 -
+2025-05-10 00:06:51,491 - INFO - ====== WebDriver manager ======
+2025-05-10 00:06:51,993 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-10 00:06:52,229 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-10 00:06:52,456 - INFO - Driver [/Users/macbook/.wdm/drivers/chromedriver/mac64/136.0.7103.92/chromedriver-mac-x64/THIRD_PARTY_NOTICES.chromedriver] found in cache
+2025-05-10 00:06:52,462 - ERROR - Error setting up Chrome driver: [Errno 8] Exec format error: '/Users/macbook/.wdm/drivers/chromedriver/mac64/136.0.7103.92/chromedriver-mac-x64/THIRD_PARTY_NOTICES.chromedriver'
+2025-05-10 00:06:52,462 - INFO - Attempting alternative setup for macOS...
+2025-05-10 00:06:56,761 - ERROR - Error setting up cookie monitoring: Message: invalid argument: Sanitizing cookie failed
+  (Session info: chrome=136.0.7103.93)
+Stacktrace:
+0   chromedriver                        0x000000010b5428b8 chromedriver + 5986488
+1   chromedriver                        0x000000010b5399ea chromedriver + 5949930
+2   chromedriver                        0x000000010aff2600 chromedriver + 415232
+3   chromedriver                        0x000000010afd9312 chromedriver + 312082
+4   chromedriver                        0x000000010afd7e98 chromedriver + 306840
+5   chromedriver                        0x000000010afd85ff chromedriver + 308735
+6   chromedriver                        0x000000010afd8554 chromedriver + 308564
+7   chromedriver                        0x000000010aff687f chromedriver + 432255
+8   chromedriver                        0x000000010b09dc3a chromedriver + 1117242
+9   chromedriver                        0x000000010b06a312 chromedriver + 906002
+10  chromedriver                        0x000000010b091566 chromedriver + 1066342
+11  chromedriver                        0x000000010b06a0e3 chromedriver + 905443
+12  chromedriver                        0x000000010b03661d chromedriver + 693789
+13  chromedriver                        0x000000010b037281 chromedriver + 696961
+14  chromedriver                        0x000000010b500580 chromedriver + 5715328
+15  chromedriver                        0x000000010b504445 chromedriver + 5731397
+16  chromedriver                        0x000000010b4daed0 chromedriver + 5562064
+17  chromedriver                        0x000000010b504e7b chromedriver + 5734011
+18  chromedriver                        0x000000010b4c9de4 chromedriver + 5492196
+19  chromedriver                        0x000000010b527a98 chromedriver + 5876376
+20  chromedriver                        0x000000010b527c60 chromedriver + 5876832
+21  chromedriver                        0x000000010b5395b1 chromedriver + 5948849
+22  libsystem_pthread.dylib             0x00007ff81b51818b _pthread_start + 99
+23  libsystem_pthread.dylib             0x00007ff81b513ae3 thread_start + 15
+
+2025-05-10 00:07:14,123 - INFO - 127.0.0.1 - - [10/May/2025 00:07:14] "POST /extract_cookies HTTP/1.1" 200 -
+2025-05-10 00:07:30,096 - INFO - ====== WebDriver manager ======
+2025-05-10 00:07:30,415 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-10 00:07:30,629 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-10 00:07:30,828 - INFO - Driver [/Users/macbook/.wdm/drivers/chromedriver/mac64/136.0.7103.92/chromedriver-mac-x64/THIRD_PARTY_NOTICES.chromedriver] found in cache
+2025-05-10 00:07:30,833 - ERROR - Error setting up Chrome driver: [Errno 8] Exec format error: '/Users/macbook/.wdm/drivers/chromedriver/mac64/136.0.7103.92/chromedriver-mac-x64/THIRD_PARTY_NOTICES.chromedriver'
+2025-05-10 00:07:30,833 - INFO - Attempting alternative setup for macOS...
+2025-05-10 00:07:32,083 - ERROR - Error setting up cookie monitoring: Message: invalid argument: Sanitizing cookie failed
+  (Session info: chrome=136.0.7103.93)
+Stacktrace:
+0   chromedriver                        0x000000010397d8b8 chromedriver + 5986488
+1   chromedriver                        0x00000001039749ea chromedriver + 5949930
+2   chromedriver                        0x000000010342d600 chromedriver + 415232
+3   chromedriver                        0x0000000103414312 chromedriver + 312082
+4   chromedriver                        0x0000000103412e98 chromedriver + 306840
+5   chromedriver                        0x00000001034135ff chromedriver + 308735
+6   chromedriver                        0x0000000103413554 chromedriver + 308564
+7   chromedriver                        0x000000010343187f chromedriver + 432255
+8   chromedriver                        0x00000001034d8c3a chromedriver + 1117242
+9   chromedriver                        0x00000001034a5312 chromedriver + 906002
+10  chromedriver                        0x00000001034cc566 chromedriver + 1066342
+11  chromedriver                        0x00000001034a50e3 chromedriver + 905443
+12  chromedriver                        0x000000010347161d chromedriver + 693789
+13  chromedriver                        0x0000000103472281 chromedriver + 696961
+14  chromedriver                        0x000000010393b580 chromedriver + 5715328
+15  chromedriver                        0x000000010393f445 chromedriver + 5731397
+16  chromedriver                        0x0000000103915ed0 chromedriver + 5562064
+17  chromedriver                        0x000000010393fe7b chromedriver + 5734011
+18  chromedriver                        0x0000000103904de4 chromedriver + 5492196
+19  chromedriver                        0x0000000103962a98 chromedriver + 5876376
+20  chromedriver                        0x0000000103962c60 chromedriver + 5876832
+21  chromedriver                        0x00000001039745b1 chromedriver + 5948849
+22  libsystem_pthread.dylib             0x00007ff81b51818b _pthread_start + 99
+23  libsystem_pthread.dylib             0x00007ff81b513ae3 thread_start + 15
+
+2025-05-10 00:07:43,177 - INFO - 127.0.0.1 - - [10/May/2025 00:07:43] "POST /extract_cookies HTTP/1.1" 200 -
+2025-05-10 00:09:26,315 - INFO - ====== WebDriver manager ======
+2025-05-10 00:09:26,625 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-10 00:09:26,849 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-10 00:09:27,060 - INFO - Driver [/Users/macbook/.wdm/drivers/chromedriver/mac64/136.0.7103.92/chromedriver-mac-x64/THIRD_PARTY_NOTICES.chromedriver] found in cache
+2025-05-10 00:09:27,066 - ERROR - Error setting up Chrome driver: [Errno 8] Exec format error: '/Users/macbook/.wdm/drivers/chromedriver/mac64/136.0.7103.92/chromedriver-mac-x64/THIRD_PARTY_NOTICES.chromedriver'
+2025-05-10 00:09:27,066 - INFO - Attempting alternative setup for macOS...
+2025-05-10 00:09:28,284 - ERROR - Error setting up cookie monitoring: Message: invalid argument: Sanitizing cookie failed
+  (Session info: chrome=136.0.7103.93)
+Stacktrace:
+0   chromedriver                        0x000000010b4988b8 chromedriver + 5986488
+1   chromedriver                        0x000000010b48f9ea chromedriver + 5949930
+2   chromedriver                        0x000000010af48600 chromedriver + 415232
+3   chromedriver                        0x000000010af2f312 chromedriver + 312082
+4   chromedriver                        0x000000010af2de98 chromedriver + 306840
+5   chromedriver                        0x000000010af2e5ff chromedriver + 308735
+6   chromedriver                        0x000000010af2e554 chromedriver + 308564
+7   chromedriver                        0x000000010af4c87f chromedriver + 432255
+8   chromedriver                        0x000000010aff3c3a chromedriver + 1117242
+9   chromedriver                        0x000000010afc0312 chromedriver + 906002
+10  chromedriver                        0x000000010afe7566 chromedriver + 1066342
+11  chromedriver                        0x000000010afc00e3 chromedriver + 905443
+12  chromedriver                        0x000000010af8c61d chromedriver + 693789
+13  chromedriver                        0x000000010af8d281 chromedriver + 696961
+14  chromedriver                        0x000000010b456580 chromedriver + 5715328
+15  chromedriver                        0x000000010b45a445 chromedriver + 5731397
+16  chromedriver                        0x000000010b430ed0 chromedriver + 5562064
+17  chromedriver                        0x000000010b45ae7b chromedriver + 5734011
+18  chromedriver                        0x000000010b41fde4 chromedriver + 5492196
+19  chromedriver                        0x000000010b47da98 chromedriver + 5876376
+20  chromedriver                        0x000000010b47dc60 chromedriver + 5876832
+21  chromedriver                        0x000000010b48f5b1 chromedriver + 5948849
+22  libsystem_pthread.dylib             0x00007ff81b51818b _pthread_start + 99
+23  libsystem_pthread.dylib             0x00007ff81b513ae3 thread_start + 15
+
+2025-05-10 00:09:37,511 - INFO - 127.0.0.1 - - [10/May/2025 00:09:37] "POST /extract_cookies HTTP/1.1" 200 -
+2025-05-10 00:15:49,831 - INFO - ====== WebDriver manager ======
+2025-05-10 00:15:50,459 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-10 00:15:50,739 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-10 00:15:50,966 - INFO - Driver [/Users/macbook/.wdm/drivers/chromedriver/mac64/136.0.7103.92/chromedriver-mac-x64/THIRD_PARTY_NOTICES.chromedriver] found in cache
+2025-05-10 00:15:50,971 - ERROR - Error setting up Chrome driver: [Errno 8] Exec format error: '/Users/macbook/.wdm/drivers/chromedriver/mac64/136.0.7103.92/chromedriver-mac-x64/THIRD_PARTY_NOTICES.chromedriver'
+2025-05-10 00:15:50,971 - INFO - Attempting alternative setup for macOS...
+2025-05-10 00:15:52,824 - ERROR - Error setting up cookie monitoring: Message: invalid argument: Sanitizing cookie failed
+  (Session info: chrome=136.0.7103.93)
+Stacktrace:
+0   chromedriver                        0x000000010be478b8 chromedriver + 5986488
+1   chromedriver                        0x000000010be3e9ea chromedriver + 5949930
+2   chromedriver                        0x000000010b8f7600 chromedriver + 415232
+3   chromedriver                        0x000000010b8de312 chromedriver + 312082
+4   chromedriver                        0x000000010b8dce98 chromedriver + 306840
+5   chromedriver                        0x000000010b8dd5ff chromedriver + 308735
+6   chromedriver                        0x000000010b8dd554 chromedriver + 308564
+7   chromedriver                        0x000000010b8fb87f chromedriver + 432255
+8   chromedriver                        0x000000010b9a2c3a chromedriver + 1117242
+9   chromedriver                        0x000000010b96f312 chromedriver + 906002
+10  chromedriver                        0x000000010b996566 chromedriver + 1066342
+11  chromedriver                        0x000000010b96f0e3 chromedriver + 905443
+12  chromedriver                        0x000000010b93b61d chromedriver + 693789
+13  chromedriver                        0x000000010b93c281 chromedriver + 696961
+14  chromedriver                        0x000000010be05580 chromedriver + 5715328
+15  chromedriver                        0x000000010be09445 chromedriver + 5731397
+16  chromedriver                        0x000000010bddfed0 chromedriver + 5562064
+17  chromedriver                        0x000000010be09e7b chromedriver + 5734011
+18  chromedriver                        0x000000010bdcede4 chromedriver + 5492196
+19  chromedriver                        0x000000010be2ca98 chromedriver + 5876376
+20  chromedriver                        0x000000010be2cc60 chromedriver + 5876832
+21  chromedriver                        0x000000010be3e5b1 chromedriver + 5948849
+22  libsystem_pthread.dylib             0x00007ff81b51818b _pthread_start + 99
+23  libsystem_pthread.dylib             0x00007ff81b513ae3 thread_start + 15
+
+2025-05-10 00:16:01,890 - INFO - 127.0.0.1 - - [10/May/2025 00:16:01] "POST /extract_cookies HTTP/1.1" 200 -
+2025-05-10 00:20:54,720 - INFO - ====== WebDriver manager ======
+2025-05-10 00:20:55,235 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-10 00:20:55,498 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-10 00:20:55,731 - INFO - Driver [/Users/macbook/.wdm/drivers/chromedriver/mac64/136.0.7103.92/chromedriver-mac-x64/THIRD_PARTY_NOTICES.chromedriver] found in cache
+2025-05-10 00:20:55,739 - ERROR - Error setting up Chrome driver: [Errno 8] Exec format error: '/Users/macbook/.wdm/drivers/chromedriver/mac64/136.0.7103.92/chromedriver-mac-x64/THIRD_PARTY_NOTICES.chromedriver'
+2025-05-10 00:20:55,740 - INFO - Attempting alternative setup for macOS...
+2025-05-10 00:20:57,737 - ERROR - Error setting up cookie monitoring: Message: invalid argument: Sanitizing cookie failed
+  (Session info: chrome=136.0.7103.93)
+Stacktrace:
+0   chromedriver                        0x00000001087e18b8 chromedriver + 5986488
+1   chromedriver                        0x00000001087d89ea chromedriver + 5949930
+2   chromedriver                        0x0000000108291600 chromedriver + 415232
+3   chromedriver                        0x0000000108278312 chromedriver + 312082
+4   chromedriver                        0x0000000108276e98 chromedriver + 306840
+5   chromedriver                        0x00000001082775ff chromedriver + 308735
+6   chromedriver                        0x0000000108277554 chromedriver + 308564
+7   chromedriver                        0x000000010829587f chromedriver + 432255
+8   chromedriver                        0x000000010833cc3a chromedriver + 1117242
+9   chromedriver                        0x0000000108309312 chromedriver + 906002
+10  chromedriver                        0x0000000108330566 chromedriver + 1066342
+11  chromedriver                        0x00000001083090e3 chromedriver + 905443
+12  chromedriver                        0x00000001082d561d chromedriver + 693789
+13  chromedriver                        0x00000001082d6281 chromedriver + 696961
+14  chromedriver                        0x000000010879f580 chromedriver + 5715328
+15  chromedriver                        0x00000001087a3445 chromedriver + 5731397
+16  chromedriver                        0x0000000108779ed0 chromedriver + 5562064
+17  chromedriver                        0x00000001087a3e7b chromedriver + 5734011
+18  chromedriver                        0x0000000108768de4 chromedriver + 5492196
+19  chromedriver                        0x00000001087c6a98 chromedriver + 5876376
+20  chromedriver                        0x00000001087c6c60 chromedriver + 5876832
+21  chromedriver                        0x00000001087d85b1 chromedriver + 5948849
+22  libsystem_pthread.dylib             0x00007ff81b51818b _pthread_start + 99
+23  libsystem_pthread.dylib             0x00007ff81b513ae3 thread_start + 15
+
+2025-05-10 00:21:09,136 - INFO - 127.0.0.1 - - [10/May/2025 00:21:09] "POST /extract_cookies HTTP/1.1" 200 -
+2025-05-10 00:28:32,233 - INFO - ====== WebDriver manager ======
+2025-05-10 00:28:32,731 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-10 00:28:32,960 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-10 00:28:33,209 - INFO - Driver [/Users/macbook/.wdm/drivers/chromedriver/mac64/136.0.7103.92/chromedriver-mac-x64/THIRD_PARTY_NOTICES.chromedriver] found in cache
+2025-05-10 00:28:33,215 - ERROR - Error setting up Chrome driver: [Errno 8] Exec format error: '/Users/macbook/.wdm/drivers/chromedriver/mac64/136.0.7103.92/chromedriver-mac-x64/THIRD_PARTY_NOTICES.chromedriver'
+2025-05-10 00:28:33,216 - INFO - Attempting alternative setup for macOS...
+2025-05-10 00:28:35,033 - ERROR - Error setting up cookie monitoring: Message: invalid argument: Sanitizing cookie failed
+  (Session info: chrome=136.0.7103.93)
+Stacktrace:
+0   chromedriver                        0x000000010e3a48b8 chromedriver + 5986488
+1   chromedriver                        0x000000010e39b9ea chromedriver + 5949930
+2   chromedriver                        0x000000010de54600 chromedriver + 415232
+3   chromedriver                        0x000000010de3b312 chromedriver + 312082
+4   chromedriver                        0x000000010de39e98 chromedriver + 306840
+5   chromedriver                        0x000000010de3a5ff chromedriver + 308735
+6   chromedriver                        0x000000010de3a554 chromedriver + 308564
+7   chromedriver                        0x000000010de5887f chromedriver + 432255
+8   chromedriver                        0x000000010deffc3a chromedriver + 1117242
+9   chromedriver                        0x000000010decc312 chromedriver + 906002
+10  chromedriver                        0x000000010def3566 chromedriver + 1066342
+11  chromedriver                        0x000000010decc0e3 chromedriver + 905443
+12  chromedriver                        0x000000010de9861d chromedriver + 693789
+13  chromedriver                        0x000000010de99281 chromedriver + 696961
+14  chromedriver                        0x000000010e362580 chromedriver + 5715328
+15  chromedriver                        0x000000010e366445 chromedriver + 5731397
+16  chromedriver                        0x000000010e33ced0 chromedriver + 5562064
+17  chromedriver                        0x000000010e366e7b chromedriver + 5734011
+18  chromedriver                        0x000000010e32bde4 chromedriver + 5492196
+19  chromedriver                        0x000000010e389a98 chromedriver + 5876376
+20  chromedriver                        0x000000010e389c60 chromedriver + 5876832
+21  chromedriver                        0x000000010e39b5b1 chromedriver + 5948849
+22  libsystem_pthread.dylib             0x00007ff81b51818b _pthread_start + 99
+23  libsystem_pthread.dylib             0x00007ff81b513ae3 thread_start + 15
+
+2025-05-10 00:28:44,274 - INFO - 127.0.0.1 - - [10/May/2025 00:28:44] "POST /extract_cookies HTTP/1.1" 200 -
+2025-05-10 00:35:55,098 - INFO - ====== WebDriver manager ======
+2025-05-10 00:35:56,731 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-10 00:35:57,098 - INFO - Get LATEST chromedriver version for google-chrome
+2025-05-10 00:35:57,463 - INFO - Driver [/Users/macbook/.wdm/drivers/chromedriver/mac64/136.0.7103.92/chromedriver-mac-x64/THIRD_PARTY_NOTICES.chromedriver] found in cache
+2025-05-10 00:35:57,469 - ERROR - Error setting up Chrome driver: [Errno 8] Exec format error: '/Users/macbook/.wdm/drivers/chromedriver/mac64/136.0.7103.92/chromedriver-mac-x64/THIRD_PARTY_NOTICES.chromedriver'
+2025-05-10 00:35:57,470 - INFO - Attempting alternative setup for macOS...
+2025-05-10 00:36:00,819 - ERROR - Error setting up cookie monitoring: Message: invalid argument: Sanitizing cookie failed
+  (Session info: chrome=136.0.7103.93)
+Stacktrace:
+0   chromedriver                        0x000000010e3808b8 chromedriver + 5986488
+1   chromedriver                        0x000000010e3779ea chromedriver + 5949930
+2   chromedriver                        0x000000010de30600 chromedriver + 415232
+3   chromedriver                        0x000000010de17312 chromedriver + 312082
+4   chromedriver                        0x000000010de15e98 chromedriver + 306840
+5   chromedriver                        0x000000010de165ff chromedriver + 308735
+6   chromedriver                        0x000000010de16554 chromedriver + 308564
+7   chromedriver                        0x000000010de3487f chromedriver + 432255
+8   chromedriver                        0x000000010dedbc3a chromedriver + 1117242
+9   chromedriver                        0x000000010dea8312 chromedriver + 906002
+10  chromedriver                        0x000000010decf566 chromedriver + 1066342
+11  chromedriver                        0x000000010dea80e3 chromedriver + 905443
+12  chromedriver                        0x000000010de7461d chromedriver + 693789
+13  chromedriver                        0x000000010de75281 chromedriver + 696961
+14  chromedriver                        0x000000010e33e580 chromedriver + 5715328
+15  chromedriver                        0x000000010e342445 chromedriver + 5731397
+16  chromedriver                        0x000000010e318ed0 chromedriver + 5562064
+17  chromedriver                        0x000000010e342e7b chromedriver + 5734011
+18  chromedriver                        0x000000010e307de4 chromedriver + 5492196
+19  chromedriver                        0x000000010e365a98 chromedriver + 5876376
+20  chromedriver                        0x000000010e365c60 chromedriver + 5876832
+21  chromedriver                        0x000000010e3775b1 chromedriver + 5948849
+22  libsystem_pthread.dylib             0x00007ff81b51818b _pthread_start + 99
+23  libsystem_pthread.dylib             0x00007ff81b513ae3 thread_start + 15
+
+2025-05-10 00:36:10,750 - INFO - 127.0.0.1 - - [10/May/2025 00:36:10] "POST /extract_cookies HTTP/1.1" 200 -
