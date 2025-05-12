@@ -299,7 +299,7 @@ def analyze_cookies_statistics(input_file, pattern_summary_file, category_summar
         reader = csv.DictReader(csvfile)
         required_fields = ['visit_id', 'name', 'domain', 'path', 'first_party_domain', 
                          'label', 'cmp_origin', 'value', 'session', 'http_only', 
-                         'host_only', 'secure', 'same_site']
+                         'host_only', 'secure', 'same_site', 'pattern']
         
         # Kiểm tra các trường bắt buộc
         missing_fields = [field for field in required_fields if field not in reader.fieldnames]
@@ -320,7 +320,8 @@ def analyze_cookies_statistics(input_file, pattern_summary_file, category_summar
                 'http_only': row['http_only'],
                 'host_only': row['host_only'],
                 'secure': row['secure'],
-                'same_site': row['same_site']
+                'same_site': row['same_site'],
+                'pattern': row['pattern']
             }
             cookies.append(cookie_data)
     
@@ -335,9 +336,8 @@ def analyze_cookies_statistics(input_file, pattern_summary_file, category_summar
     # Tạo pattern dictionary
     pattern_dict = {}
     for name, cookies in cookie_groups.items():
-        values = [cookie['value'] for cookie in cookies]
         pattern_dict[name] = {
-            "pattern": values[0],  # Sử dụng giá trị đầu tiên làm pattern
+            "pattern": cookies[0]['pattern'],  # Lấy pattern từ cookie đầu tiên trong nhóm
             "count": len(cookies),
             "examples": cookies
         }
