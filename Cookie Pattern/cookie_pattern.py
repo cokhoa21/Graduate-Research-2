@@ -483,85 +483,6 @@ def optimize_pattern(pattern):
     
     return optimized
 
-def analyze_cookies(cookie_list, cookie_names=None):
-    """
-    Phân tích danh sách cookies để tìm pattern theo tên cookie
-    
-    Args:
-        cookie_list (list): Danh sách các chuỗi cookie
-        cookie_names (list): Danh sách tên cookie cần chú ý đặc biệt
-        
-    Returns:
-        dict: Dictionary với key là tên cookie và value là pattern
-    """
-    # Nhóm cookies theo tên
-    cookie_groups = defaultdict(list)
-    
-    for cookie_str in cookie_list:
-        name, value = parse_cookie_string(cookie_str)
-        if name is None:
-            name = "_unnamed_cookie_"
-        cookie_groups[name].append(value)
-    
-    # Trích xuất pattern cho mỗi nhóm
-    cookie_patterns = {}
-    for name, values in cookie_groups.items():
-        # Đưa tên cookie cho hàm extract_pattern nếu cần pattern đặc biệt
-        pattern = extract_pattern_from_values(values)
-        
-        # Xử lý đặc biệt cho một số cookie phổ biến
-        if name == "CookieConsent" and pattern == ".*":
-            if any(v.startswith('{stamp:') for v in values):
-                pattern = r"\{stamp:%27[A-Za-z0-9+/=]+%27%2Cnecessary:(true|false)(%2C\w+:(true|false))*%2Cver:\d+%2Cutc:\d+%2Cregion:%27[a-z]{2}%27\}"
-            elif any(v == "-3" for v in values):
-                pattern = "-[0-9]"
-        
-        elif name == "_ga" and pattern == ".*":
-            pattern = "GA1.2.[0-9]+.[0-9]+"
-        
-        elif name == "OptanonAlertBoxClosed" and pattern == ".*":
-            pattern = r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z"
-        
-        elif name == "OptanonConsent" and pattern == ".*":
-            pattern = r"isIABGlobal=(true|false)&datestamp=[^&]+&version=\d+\.\d+\.\d+&hosts=&consentId=[0-9a-f-]+&interactionCount=\d+&landingPath=\w+&groups=[^&]+&geolocation=[^&]+(&AwaitingReconsent=(true|false))?"
-        
-        elif name == "vuid" and pattern == ".*":
-            if any('%7C' in v for v in values):
-                pattern = r"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}%7C\d+"
-            elif any(re.match(r'pl\d+\.\d+', v) for v in values):
-                pattern = r"pl\d+\.\d+"
-        
-        
-        cookie_patterns[name] = {
-            "pattern": pattern,
-            "count": len(values),
-            "examples": values  # xuất hết values
-        }
-    
-    return cookie_patterns
-
-def run_analysis(cookie_list):
-    """
-    Chạy phân tích danh sách cookies và hiển thị kết quả
-    
-    Args:
-        cookie_list (list): Danh sách các chuỗi cookie
-    """
-    print("===== PHÂN TÍCH PATTERN COOKIE =====\n")
-    
-    # Phân tích cookies
-    cookie_patterns = analyze_cookies(cookie_list)
-    
-    # Hiển thị kết quả
-    print(f"Tìm thấy {len(cookie_patterns)} nhóm cookie:\n")
-    
-    for name, data in cookie_patterns.items():
-        print(f"Cookie: {name}")
-        print(f"Pattern: {data['pattern']}")
-        print(f"Số lượng: {data['count']}")
-        print(f"Ví dụ: {', '.join(data['examples'][:3] if len(data['examples']) > 3 else data['examples'])}")
-        print()
-
 def read_cookies_from_csv(input_file):
     cookies = []
     with open(input_file, newline='', encoding='utf-8') as csvfile:
@@ -608,289 +529,7 @@ def write_patterns_to_csv(output_file, pattern_dict):
                 row['pattern'] = data['pattern']  # Add the pattern
                 writer.writerow(row)
 
-def get_cookie_category(name, pattern, labels):
-    """
-    Phân loại cookie dựa trên tên, pattern và labels
-    
-    Args:
-        name (str): Tên cookie
-        pattern (str): Pattern của cookie
-        labels (list): Danh sách các label
-        
-    Returns:
-        str: Loại cookie
-    """
-    # Phân loại dựa trên tên cookie
-    name_lower = name.lower()
-    
-    # Session ID cookies
-    if name_lower == "phpsessid":
-        return "PHP Session ID"
-    elif name_lower == "jsessionid":
-        return "Java Session ID"
-    elif name_lower == "loc":
-        return "Session ID"
-    elif any(x in name_lower for x in ['session', 'sess', 'sid']):
-        return "Session ID"
-    
-    # Google Analytics & Ads cookies
-    if name_lower.startswith('_ga'):
-        return "Google Analytics"
-    elif name_lower == "__gads":
-        return "Google Ads"
-    elif name_lower.startswith('_gid'):
-        return "Google Analytics"
-    elif name_lower.startswith('_gat'):
-        return "Google Analytics"
-    elif name_lower == "ide":
-        return "Google Ads"
-    
-    # Facebook cookies
-    if name_lower == "_fbp":
-        return "Facebook Pixel"
-    elif name_lower.startswith('_fb'):
-        return "Facebook"
-    
-    # LinkedIn cookies
-    if name_lower == "bcookie":
-        return "LinkedIn"
-    elif name_lower.startswith('li_'):
-        return "LinkedIn"
-    
-    # YouTube cookies
-    if name_lower == "visitor_info1_live":
-        return "YouTube"
-    elif name_lower == "ysc":
-        return "YouTube"
-    elif name_lower == "vuid":
-        return "Vimeo"
-    
-    # UUID cookies
-    if name_lower == "uuid":
-        return "UUID"
-    elif re.search(r'[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}', pattern or ''):
-        return "UUID"
-    
-    # Authentication cookies
-    if any(x in name_lower for x in ['auth', 'token', 'jwt', 'login', 'user']):
-        return "Authentication"
-    
-    # Security cookies
-    if any(x in name_lower for x in ['security', 'secure', 'csrf', 'xsrf']):
-        return "Security"
-    
-    # Preference cookies
-    if any(x in name_lower for x in ['pref', 'preference', 'settings', 'config']):
-        return "Preference"
-    
-    # Phân loại dựa trên pattern
-    if pattern:
-        # Google Analytics pattern
-        if re.search(r'\d+\.\d+\.\d+\.\d+\.\d+\.\d+', pattern):
-            return "Google Analytics"
-        
-        # Facebook Pixel pattern
-        if re.search(r'fb\.1\.\d+\.\d+', pattern):
-            return "Facebook Pixel"
-        
-        # UUID pattern
-        if re.search(r'[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}', pattern):
-            return "UUID"
-        
-        # Session ID patterns
-        if re.search(r'[a-z0-9]{26,32}', pattern):
-            return "PHP Session ID"
-        if re.search(r'[0-9]{4}[a-zA-Z0-9]{4,20}:[0-9a-zA-Z]{8,10}', pattern):
-            return "Java Session ID"
-    
-    # Phân loại dựa trên labels
-    if labels:
-        label_str = '|'.join(labels).lower()
-        
-        # Analytics
-        if any(x in label_str for x in ['analytics', 'statistics']):
-            return "Analytics"
-        
-        # Advertising
-        if any(x in label_str for x in ['advertising', 'marketing']):
-            return "Advertising"
-        
-        # Necessary
-        if any(x in label_str for x in ['necessary', 'essential']):
-            return "Necessary"
-        
-        # Preference
-        if any(x in label_str for x in ['preference', 'preferences']):
-            return "Preference"
-        
-        # Social Media
-        if any(x in label_str for x in ['social', 'social media']):
-            return "Social Media"
-    
-    return "Other"
-
-def analyze_label_distribution(labels):
-    """
-    Phân tích phân phối của các label
-    
-    Args:
-        labels (list): Danh sách các label
-        
-    Returns:
-        dict: Thống kê về phân phối label
-    """
-    label_stats = {}
-    for label in labels:
-        if label not in label_stats:
-            label_stats[label] = 0
-        label_stats[label] += 1
-    
-    # Sắp xếp theo số lượng giảm dần
-    sorted_stats = dict(sorted(label_stats.items(), key=lambda x: x[1], reverse=True))
-    return sorted_stats
-
-def write_unique_patterns_to_csv(output_file, pattern_dict):
-    """
-    Write unique patterns to a separate CSV file, including metadata about the pattern
-    """
-    with open(output_file, 'w', newline='', encoding='utf-8') as csvfile:
-        fieldnames = ['name', 'pattern', 'count', 'domains', 'paths', 'first_party_domains', 
-                     'labels', 'label_distribution', 'cookie_category', 'cmp_origins', 
-                     'session_count', 'http_only_count', 'host_only_count', 'secure_count', 
-                     'same_site_values']
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        writer.writeheader()
-        
-        for name, data in pattern_dict.items():
-            # Collect unique values for each field
-            domains = set()
-            paths = set()
-            first_party_domains = set()
-            labels = set()
-            cmp_origins = set()
-            session_count = 0
-            http_only_count = 0
-            host_only_count = 0
-            secure_count = 0
-            same_site_values = set()
-            
-            for cookie in data['examples']:
-                domains.add(cookie['domain'])
-                paths.add(cookie['path'])
-                first_party_domains.add(cookie['first_party_domain'])
-                labels.add(cookie['label'])
-                cmp_origins.add(cookie['cmp_origin'])
-                if cookie['session'] == 'true':
-                    session_count += 1
-                if cookie['http_only'] == 'true':
-                    http_only_count += 1
-                if cookie['host_only'] == 'true':
-                    host_only_count += 1
-                if cookie['secure'] == 'true':
-                    secure_count += 1
-                same_site_values.add(cookie['same_site'])
-            
-            # Phân tích phân phối label
-            label_distribution = analyze_label_distribution([cookie['label'] for cookie in data['examples']])
-            label_distribution_str = '; '.join([f"{label}: {count}" for label, count in label_distribution.items()])
-            
-            # Xác định loại cookie
-            cookie_category = get_cookie_category(name, data['pattern'], list(labels))
-            
-            row = {
-                'name': name,
-                'pattern': data['pattern'],
-                'count': data['count'],
-                'domains': '|'.join(sorted(domains)),
-                'paths': '|'.join(sorted(paths)),
-                'first_party_domains': '|'.join(sorted(first_party_domains)),
-                'labels': '|'.join(sorted(labels)),
-                'label_distribution': label_distribution_str,
-                'cookie_category': cookie_category,
-                'cmp_origins': '|'.join(sorted(cmp_origins)),
-                'session_count': session_count,
-                'http_only_count': http_only_count,
-                'host_only_count': host_only_count,
-                'secure_count': secure_count,
-                'same_site_values': '|'.join(sorted(same_site_values))
-            }
-            writer.writerow(row)
-
-def write_pattern_summary_to_csv(output_file, pattern_dict):
-    """
-    Write a summary of patterns grouped by cookie category
-    """
-    # Tạo dictionary để nhóm theo category
-    category_groups = defaultdict(list)
-    
-    for name, data in pattern_dict.items():
-        # Collect labels
-        labels = set()
-        for cookie in data['examples']:
-            labels.add(cookie['label'])
-        
-        # Xác định category
-        category = get_cookie_category(name, data['pattern'], list(labels))
-        
-        # Phân tích phân phối label
-        label_distribution = analyze_label_distribution([cookie['label'] for cookie in data['examples']])
-        
-        # Collect domains
-        domains = set()
-        for cookie in data['examples']:
-            domains.add(cookie['domain'])
-        
-        category_groups[category].append({
-            'name': name,
-            'pattern': data['pattern'],
-            'count': data['count'],
-            'labels': '|'.join(sorted(labels)),
-            'label_distribution': label_distribution,
-            'domains': '|'.join(sorted(domains))
-        })
-    
-    # Ghi ra file CSV
-    with open(output_file, 'w', newline='', encoding='utf-8') as csvfile:
-        fieldnames = ['category', 'cookie_name', 'pattern', 'count', 'labels', 
-                     'label_distribution', 'domains']
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        writer.writeheader()
-        
-        # Sắp xếp categories theo thứ tự ưu tiên
-        category_order = [
-            "PHP Session ID", "Java Session ID", "Session ID",
-            "Google Analytics", "Google Ads",
-            "Facebook Pixel", "Facebook",
-            "LinkedIn", "YouTube", "Vimeo",
-            "UUID", "Authentication", "Security",
-            "Preference", "Analytics", "Advertising",
-            "Necessary", "Social Media", "Other"
-        ]
-        
-        # Sắp xếp categories theo thứ tự ưu tiên
-        sorted_categories = sorted(
-            category_groups.keys(),
-            key=lambda x: category_order.index(x) if x in category_order else len(category_order)
-        )
-        
-        for category in sorted_categories:
-            cookies = category_groups[category]
-            # Sắp xếp cookies trong mỗi category theo count giảm dần
-            cookies.sort(key=lambda x: x['count'], reverse=True)
-            
-            for cookie in cookies:
-                row = {
-                    'category': category,
-                    'cookie_name': cookie['name'],
-                    'pattern': cookie['pattern'],
-                    'count': cookie['count'],
-                    'labels': cookie['labels'],
-                    'label_distribution': '; '.join([f"{label}: {count}" for label, count in cookie['label_distribution'].items()]),
-                    'domains': cookie['domains']
-                }
-                writer.writerow(row)
-
-def analyze_cookies_csv_final(input_file, output_file, pattern_summary_file, category_summary_file):
+def analyze_cookies_csv(input_file, output_file):
     cookies = read_cookies_from_csv(input_file)
     # Group cookies by name
     cookie_groups = defaultdict(list)
@@ -905,7 +544,7 @@ def analyze_cookies_csv_final(input_file, output_file, pattern_summary_file, cat
     for name, cookies in cookie_groups.items():
         values = [cookie['value'] for cookie in cookies]
         # Lấy pattern cơ bản
-        pattern = extract_pattern_from_values_improved(values, name)
+        pattern = extract_pattern_from_values(values)
         
         # Cải thiện pattern nếu cần
         improved_pattern = improve_pattern_detection(name, values, pattern)
@@ -917,11 +556,7 @@ def analyze_cookies_csv_final(input_file, output_file, pattern_summary_file, cat
         }
     
     write_patterns_to_csv(output_file, cookie_patterns)
-    write_unique_patterns_to_csv(pattern_summary_file, cookie_patterns)
-    write_pattern_summary_to_csv(category_summary_file, cookie_patterns)
-    print(f"Đã ghi kết quả chi tiết ra {output_file}")
-    print(f"Đã ghi tổng hợp pattern ra {pattern_summary_file}")
-    print(f"Đã ghi tổng hợp theo category ra {category_summary_file}")
+    print(f"Đã ghi kết quả ra {output_file}")
 
 def extract_pattern_from_values_improved(values, cookie_name=None):
     """
@@ -967,11 +602,31 @@ def extract_pattern_from_values_improved(values, cookie_name=None):
         elif cookie_name == "__utma":
             return r"\d+\.\d+\.\d+\.\d+\.\d+\.\d+"
         elif cookie_name == "__utmz":
-            return r"\d+\.\d+\.\d+\.\d+\.utmcsr=\(direct\)\|utmccn=\(direct\)\|utmcmd=\(none\),\.\*$"
+            return r"\d+\.\d+\.\d+\.\d+\.utmcsr=\(direct\)\|utmccn=\(direct\)\|utmcmd=\(none\)"
         elif cookie_name == "CMSPreferredCulture":
             return r"[a-z]{2}-[A-Z]{2}"
         elif cookie_name == "ab":
             return r"0001%3A[A-Za-z0-9%+]+"
+        elif cookie_name == "_ga":
+            return r"GA1\.2\.\d+\.\d+"
+        elif cookie_name == "_gid":
+            return r"GA1\.2\.\d+\.\d+"
+        elif cookie_name == "_gat":
+            return r"1"
+        elif cookie_name == "CookieConsent":
+            if any(v.startswith('{stamp:') for v in values):
+                return r"\{stamp:%27[A-Za-z0-9+/=]+%27%2Cnecessary:(true|false)(%2C\w+:(true|false))*%2Cver:\d+%2Cutc:\d+%2Cregion:%27[a-z]{2}%27\}"
+            elif any(v == "-3" for v in values):
+                return r"-[0-9]"
+        elif cookie_name == "OptanonAlertBoxClosed":
+            return r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z"
+        elif cookie_name == "OptanonConsent":
+            return r"isIABGlobal=(true|false)&datestamp=[^&]+&version=\d+\.\d+\.\d+&hosts=&consentId=[0-9a-f-]+&interactionCount=\d+&landingPath=\w+&groups=[^&]+&geolocation=[^&]+(&AwaitingReconsent=(true|false))?"
+        elif cookie_name == "vuid":
+            if any('%7C' in v for v in values):
+                return r"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}%7C\d+"
+            elif any(re.match(r'pl\d+\.\d+', v) for v in values):
+                return r"pl\d+\.\d+"
     
     # Kiểm tra các pattern đặc biệt khác không phụ thuộc vào tên cookie
     if values and is_special_cookie_format(values[0]):
@@ -1002,74 +657,102 @@ def improve_pattern_detection(name, values, pattern):
     if pattern == ".*":
         # Cookie loc
         if name == "loc" and all(v.startswith("MDAwMD") for v in values):
-            return r"MDAwMD[A-Za-z0-9+/=]+(\.\*|,\.\*)?$"
+            return r"MDAwMD[A-Za-z0-9+/=]+"
             
         # PHPSESSID pattern
         elif name == "PHPSESSID":
-            return r"[a-z0-9]{26,32}(\.\*|,\.\*)?$"
+            return r"[a-z0-9]{26,32}"
             
         # IDE pattern
         elif name == "IDE" and all(v.startswith("AHWqTU") for v in values):
-            return r"AHWqTU[A-Za-z0-9_-]{70,90},AHWqTU\.\*$"
+            return r"AHWqTU[A-Za-z0-9_-]{70,90}"
             
         # __gads pattern
         elif name == "__gads" and all("ID=" in v for v in values):
-            return r"ID=[a-z0-9]{32}(-[a-z0-9]{32})?:T=\d+:S=ALNI_[A-Za-z0-9_-]+,\.\*$"
+            return r"ID=[a-z0-9]{32}(-[a-z0-9]{32})?:T=\d+:S=ALNI_[A-Za-z0-9_-]+"
             
         # _cb pattern
         elif name == "_cb":
-            return r"[A-Za-z0-9]{16,24},\.\*$"
+            return r"[A-Za-z0-9]{16,24}"
             
         # _fbp pattern
         elif name == "_fbp" and all(v.startswith("fb.1.") for v in values):
-            return r"fb\.1\.\d+\.\d+,\.\*$"
+            return r"fb\.1\.\d+\.\d+"
             
         # bcookie pattern
         elif name == "bcookie" and all(v.startswith('"""v=2&') for v in values):
-            return r'"""v=2&[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}""","""v=2&.+-.+-4.+-8.+-.+"""$'
+            return r'"""v=2&[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"""'
             
         # VISITOR_INFO1_LIVE pattern
         elif name == "VISITOR_INFO1_LIVE":
-            return r"[A-Za-z0-9_-]{10,16},.+$"
+            return r"[A-Za-z0-9_-]{10,16}"
             
         # YSC pattern
         elif name == "YSC":
-            return r"[A-Za-z0-9_-]{9,11},.+$"
+            return r"[A-Za-z0-9_-]{9,11}"
             
         # JSESSIONID pattern
         elif name == "JSESSIONID":
             if any(":" in v for v in values):
-                return r"[0-9]{4}[a-zA-Z0-9]{4,20}:[0-9a-zA-Z]{8,10},\.\*$"
+                return r"[0-9]{4}[a-zA-Z0-9]{4,20}:[0-9a-zA-Z]{8,10}"
             else:
-                return r"[a-z0-9]{16,32},\.\*$"
+                return r"[a-z0-9]{16,32}"
                 
         # CMSPreferredCulture pattern
         elif name == "CMSPreferredCulture":
-            return r"[a-z]{2}-[A-Z]{2},\\\.\*.*$"
+            return r"[a-z]{2}-[A-Z]{2}"
             
         # ab pattern
         elif name == "ab":
-            return r"0001%3A[A-Za-z0-9%+]+,\.\*$"
+            return r"0001%3A[A-Za-z0-9%+]+"
             
         # uuid pattern
         elif name == "uuid":
-            return r"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12},\.\*$"
+            return r"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
             
         # __utma pattern
         elif name == "__utma":
-            return r"\d+\.\d+\.\d+\.\d+\.\d+\.\d+,\.\*$"
+            return r"\d+\.\d+\.\d+\.\d+\.\d+\.\d+"
             
         # __utmz pattern
         elif name == "__utmz":
-            return r"\d+\.\d+\.\d+\.\d+\.utmcsr=\(direct\)\|utmccn=\(direct\)\|utmcmd=\(none\),\.\*$"
+            return r"\d+\.\d+\.\d+\.\d+\.utmcsr=\(direct\)\|utmccn=\(direct\)\|utmcmd=\(none\)"
+            
+        # Google Analytics patterns
+        elif name == "_ga":
+            return r"GA1\.2\.\d+\.\d+"
+        elif name == "_gid":
+            return r"GA1\.2\.\d+\.\d+"
+        elif name == "_gat":
+            return r"1"
+            
+        # CookieConsent patterns
+        elif name == "CookieConsent":
+            if any(v.startswith('{stamp:') for v in values):
+                return r"\{stamp:%27[A-Za-z0-9+/=]+%27%2Cnecessary:(true|false)(%2C\w+:(true|false))*%2Cver:\d+%2Cutc:\d+%2Cregion:%27[a-z]{2}%27\}"
+            elif any(v == "-3" for v in values):
+                return r"-[0-9]"
+                
+        # Optanon patterns
+        elif name == "OptanonAlertBoxClosed":
+            return r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z"
+        elif name == "OptanonConsent":
+            return r"isIABGlobal=(true|false)&datestamp=[^&]+&version=\d+\.\d+\.\d+&hosts=&consentId=[0-9a-f-]+&interactionCount=\d+&landingPath=\w+&groups=[^&]+&geolocation=[^&]+(&AwaitingReconsent=(true|false))?"
+            
+        # Vimeo pattern
+        elif name == "vuid":
+            if any('%7C' in v for v in values):
+                return r"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}%7C\d+"
+            elif any(re.match(r'pl\d+\.\d+', v) for v in values):
+                return r"pl\d+\.\d+"
     
     return pattern
 
 if __name__ == "__main__":
     # Ví dụ sử dụng:
-    # python pattern_analyze.py input.csv output.csv pattern_summary.csv category_summary.csv
+    # python pattern_analyze.py input.csv output.csv
     import sys
-    if len(sys.argv) == 5:
-        analyze_cookies_csv_final(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
+    if len(sys.argv) == 3:
+        analyze_cookies_csv(sys.argv[1], sys.argv[2])
     else:
-        print("Cách dùng: python pattern_analyze.py input.csv output.csv pattern_summary.csv category_summary.csv")
+        print("Cách dùng: python pattern_analyze.py input.csv output.csv")
