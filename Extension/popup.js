@@ -452,7 +452,7 @@ document.addEventListener('DOMContentLoaded', () => {
     predictBtn.addEventListener('click', async () => {
         const backendApiUrl = apiUrl.value.trim();
         if (!backendApiUrl) {
-            status.textContent = "API URL non définie";
+            status.textContent = "API URL không được định nghĩa";
             return;
         }
 
@@ -476,60 +476,52 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (cookiesToProcess.length === 0) {
-            status.textContent = "Pas de cookies à traiter";
+            status.textContent = "Không có cookies để xử lý";
             return;
         }
 
-        status.textContent = `Sending ${cookiesToProcess.length} cookies to API...`;
-        predictionResult.textContent = "Waiting for predictions...";
+        status.textContent = `Đang dự đoán ${cookiesToProcess.length} cookies...`;
+        predictionResult.textContent = "Đang đợi kết quả dự đoán...";
+
+        // Ẩn container đánh giá rủi ro khi bắt đầu dự đoán mới
+        document.getElementById('websiteRiskContainer').style.display = 'none';
 
         try {
-            // Make predictions for each cookie
-            const predictions = await Promise.all(cookiesToProcess.map(async (cookie, index) => {
-                try {
-                    console.log(`Sending cookie "${cookie.name}" (${cookie.source}) to API:`, cookie.value.substring(0, 30) + (cookie.value.length > 30 ? '...' : ''));
+            // Sử dụng API /predict_bulk để dự đoán toàn bộ cookies cùng lúc
+            const bulkUrl = backendApiUrl.replace('/predict', '/predict_bulk');
 
-                    const response = await fetch(backendApiUrl, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ cookie_value: cookie.value })
-                    });
+            const bulkResponse = await fetch(bulkUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ cookies: cookiesToProcess })
+            });
 
-                    if (!response.ok) {
-                        const errorText = await response.text();
-                        console.error(`API Error (${response.status}):`, errorText);
-                        throw new Error(`HTTP Error: ${response.status} - ${errorText || 'No error details'}`);
-                    }
+            if (!bulkResponse.ok) {
+                const errorText = await bulkResponse.text();
+                console.error(`API Error (${bulkResponse.status}):`, errorText);
+                throw new Error(`HTTP Error: ${bulkResponse.status} - ${errorText || 'Không có chi tiết lỗi'}`);
+            }
 
-                    const result = await response.json();
-                    console.log(`Prediction for "${cookie.name}" (${cookie.source}):`, result);
-                    return {
-                        cookieName: cookie.name,
-                        source: cookie.source,
-                        domain: cookie.domain,
-                        value: cookie.value,
-                        prediction: result
-                    };
-                } catch (error) {
-                    console.error(`Error predicting "${cookie.name}" (${cookie.source}):`, error);
-                    return {
-                        cookieName: cookie.name,
-                        source: cookie.source,
-                        domain: cookie.domain,
-                        value: cookie.value,
-                        error: error.message
-                    };
-                }
-            }));
+            // Lấy kết quả từ API
+            const bulkResult = await bulkResponse.json();
+            console.log("Bulk prediction result:", bulkResult);
+
+            // Lấy các phần của kết quả
+            const predictions = bulkResult.cookie_predictions || [];
+            const riskDistribution = bulkResult.risk_distribution || {};
+            const websiteRisk = bulkResult.website_risk || { score: 0, level: "N/A" };
+
+            // Hiển thị đánh giá rủi ro tổng thể
+            displayWebsiteRisk(websiteRisk, riskDistribution);
 
             // Format and display results
             // Sắp xếp kết quả theo tên cookie rồi theo nguồn để dễ so sánh
             predictions.sort((a, b) => {
                 // Sắp xếp theo tên cookie trước
-                if (a.cookieName !== b.cookieName) {
-                    return a.cookieName.localeCompare(b.cookieName);
+                if (a.cookie_name !== b.cookie_name) {
+                    return a.cookie_name.localeCompare(b.cookie_name);
                 }
                 // Nếu cùng tên thì sắp xếp theo nguồn
                 const sourceOrder = { 'selenium': 0, 'header': 1, 'standard': 2 };
@@ -538,14 +530,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const formattedResults = predictions.map((pred, index) => {
                 // Xác định xem cookie này có trùng tên với cookie trước đó không
-                const isDuplicate = index > 0 && pred.cookieName === predictions[index - 1].cookieName;
+                const isDuplicate = index > 0 && pred.cookie_name === predictions[index - 1].cookie_name;
                 const duplicateClass = isDuplicate ? 'duplicate-cookie' : '';
 
                 if (pred.error) {
-                    return `<div class="${duplicateClass}">Cookie "${pred.cookieName}" (${pred.source || 'unknown'}): Error - ${pred.error}</div>`;
+                    return `<div class="${duplicateClass}">Cookie "${pred.cookie_name}" (${pred.source || 'unknown'}): Error - ${pred.error}</div>`;
                 }
 
-                const { predicted_class, probabilities } = pred.prediction;
+                const predicted_class = pred.predicted_class.toLowerCase();
+                const probabilities = pred.probabilities;
                 const labels = ['very low', 'low', 'average', 'high', 'very high'];
 
                 // Determine source class for styling
@@ -567,21 +560,21 @@ document.addEventListener('DOMContentLoaded', () => {
                     `;
                 }).join('');
 
-                // Hiển thị một phần của giá trị cookie để dễ phân biệt
-                const truncatedValue = pred.value ?
-                    (pred.value.length > 20 ? pred.value.substring(0, 20) + '...' : pred.value) : '';
+                // Hiển thị một phần của tên cookie nếu quá dài
+                const truncatedName = pred.cookie_name.length > 30 ?
+                    pred.cookie_name.substring(0, 30) + '...' :
+                    pred.cookie_name;
 
                 return `
                     <div class="prediction-card ${duplicateClass}">
                         <div class="cookie-header">
-                            Cookie: "${pred.cookieName}" 
+                            Cookie: "${truncatedName}" 
                             <span class="${sourceClass}" style="font-size: 11px; margin-left: 5px;">
                                 (${pred.source === 'header' ? 'response header' :
                         pred.source === 'selenium' ? 'selenium' : 'standard'})
                             </span>
                             ${isDuplicate ? '<span class="duplicate-badge">Duplicate Name</span>' : ''}
                         </div>
-                        ${truncatedValue ? `<div class="cookie-value-preview">Value: ${truncatedValue}</div>` : ''}
                         <div class="prediction-class">Risk Level: <span class="class-${predicted_class}">${predicted_class}</span></div>
                         <div class="probabilities">
                             ${probabilityBars}
@@ -603,31 +596,29 @@ document.addEventListener('DOMContentLoaded', () => {
                     header: successfulPredictions.filter(p => p.source === 'header').length,
                     selenium: successfulPredictions.filter(p => p.source === 'selenium').length
                 },
-                uniqueNames: new Set(successfulPredictions.map(p => p.cookieName)).size,
-                byRiskLevel: {
-                    'very low': successfulPredictions.filter(p => p.prediction.predicted_class === 'very low').length,
-                    'low': successfulPredictions.filter(p => p.prediction.predicted_class === 'low').length,
-                    'average': successfulPredictions.filter(p => p.prediction.predicted_class === 'average').length,
-                    'high': successfulPredictions.filter(p => p.prediction.predicted_class === 'high').length,
-                    'very high': successfulPredictions.filter(p => p.prediction.predicted_class === 'very high').length
-                }
+                uniqueNames: new Set(successfulPredictions.map(p => p.cookie_name)).size,
+                byRiskLevel: riskDistribution
             };
 
             // Hiển thị thông tin chi tiết về kết quả dự đoán, bao gồm cả số lượng cookie trùng tên
-            status.textContent = `Predictions: ${stats.success}/${stats.total} successful (${stats.bySource.standard} standard, ${stats.bySource.header} header, ${stats.bySource.selenium} selenium) - ${stats.uniqueNames} unique names`;
+            status.textContent = `Dự đoán thành công: ${stats.success}/${stats.total} cookies (${stats.bySource.standard} standard, ${stats.bySource.header} header, ${stats.bySource.selenium} selenium)`;
 
             // Hiển thị thống kê theo nhãn dự đoán
-            const riskLevels = ['very low', 'low', 'average', 'high', 'very high'];
+            const riskLevels = ['VERY LOW', 'LOW', 'AVERAGE', 'HIGH', 'VERY HIGH'];
             const riskStatsHTML = `
                 <div>
                     <strong>Phân loại theo mức độ rủi ro:</strong>
                     <div class="risk-stats">
-                        ${riskLevels.map(level =>
-                `<div class="risk-badge risk-badge-${level.replace(' ', '-')}">
-                                ${level.toUpperCase()}
-                                <span class="risk-count">${stats.byRiskLevel[level]}</span>
-                            </div>`
-            ).join('')}
+                        ${riskLevels.map(level => {
+                const count = riskDistribution[level] || 0;
+                const levelClass = level.toLowerCase().replace(' ', '-');
+                return `
+                                <div class="risk-badge risk-badge-${levelClass}">
+                                    ${level}
+                                    <span class="risk-count">${count}</span>
+                                </div>
+                            `;
+            }).join('')}
                     </div>
                 </div>
             `;
@@ -636,15 +627,90 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div><strong>Tổng số cookies: ${stats.total}</strong> (${stats.success} thành công, ${stats.error} lỗi)</div>
                 <div><strong>Theo nguồn:</strong> ${stats.bySource.standard} tiêu chuẩn, ${stats.bySource.header} header, ${stats.bySource.selenium} selenium</div>
                 ${riskStatsHTML}
+                <div><strong>Đánh giá rủi ro tổng thể:</strong> ${websiteRisk.level} (${Math.round(websiteRisk.score * 100)}%)</div>
             `;
 
             console.log("Prediction stats:", stats);
 
         } catch (error) {
-            status.textContent = `Error: ${error.message}`;
-            predictionResult.textContent = "Prediction failed";
+            status.textContent = `Lỗi: ${error.message}`;
+            predictionResult.textContent = "Dự đoán thất bại";
+            document.getElementById('websiteRiskContainer').style.display = 'none';
         }
     });
+
+    // Hàm hiển thị đánh giá rủi ro tổng thể của website
+    function displayWebsiteRisk(websiteRisk, riskDistribution) {
+        const riskContainer = document.getElementById('websiteRiskContainer');
+        const riskScoreValue = document.getElementById('riskScoreValue');
+        const websiteRiskLevel = document.getElementById('websiteRiskLevel');
+        const riskGaugeFill = document.getElementById('riskGaugeFill');
+        const riskGaugePointer = document.getElementById('riskGaugePointer');
+        const riskDistributionChart = document.getElementById('riskDistributionChart');
+
+        // Nếu không có đủ thông tin, ẩn phần đánh giá rủi ro
+        if (!websiteRisk || typeof websiteRisk.score !== 'number') {
+            riskContainer.style.display = 'none';
+            return;
+        }
+
+        // Hiển thị container
+        riskContainer.style.display = 'block';
+
+        // Cập nhật điểm rủi ro
+        const riskScore = Math.round(websiteRisk.score * 100);
+        riskScoreValue.textContent = riskScore;
+
+        // Cập nhật mức độ rủi ro
+        const riskLevel = websiteRisk.level || 'N/A';
+        websiteRiskLevel.textContent = riskLevel;
+        websiteRiskLevel.className = 'website-risk-level-text risk-level-' + riskLevel.replace(' ', '-');
+
+        // Cập nhật gauge
+        const rotateDegree = 180 * websiteRisk.score;
+        riskGaugeFill.style.transform = `rotate(${180 - rotateDegree}deg)`;
+        riskGaugePointer.style.transform = `rotate(${rotateDegree - 90}deg)`;
+
+        // Cập nhật biểu đồ phân bố rủi ro
+        riskDistributionChart.innerHTML = '';
+
+        // Mảng các mức độ rủi ro để hiển thị theo thứ tự
+        const riskLevels = ['VERY LOW', 'LOW', 'AVERAGE', 'HIGH', 'VERY HIGH'];
+        const colors = {
+            'VERY LOW': '#4caf50',
+            'LOW': '#8bc34a',
+            'AVERAGE': '#ffeb3b',
+            'HIGH': '#ff9800',
+            'VERY HIGH': '#f44336'
+        };
+
+        // Tính tổng số cookies
+        const totalCookies = Object.values(riskDistribution).reduce((acc, val) => acc + val, 0);
+
+        if (totalCookies > 0) {
+            // Tạo segment cho mỗi mức độ rủi ro
+            riskLevels.forEach(level => {
+                const count = riskDistribution[level] || 0;
+                if (count > 0) {
+                    const percentage = (count / totalCookies * 100).toFixed(1);
+                    const segment = document.createElement('div');
+                    segment.className = 'risk-segment';
+                    segment.style.width = `${percentage}%`;
+                    segment.style.backgroundColor = colors[level];
+
+                    // Thêm tooltip
+                    const tooltip = document.createElement('div');
+                    tooltip.className = 'risk-segment-tooltip';
+                    tooltip.textContent = `${level}: ${count} (${percentage}%)`;
+                    segment.appendChild(tooltip);
+
+                    riskDistributionChart.appendChild(segment);
+                }
+            });
+        } else {
+            riskDistributionChart.innerHTML = '<div style="padding: 5px;">Không có dữ liệu</div>';
+        }
+    }
 
     // Clear data
     clearBtn.addEventListener('click', () => {
