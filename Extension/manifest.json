@@ -4,10 +4,14 @@
     "version": "1.0",
     "description": "Outil d'extraction et analyse de risque des cookies",
     "permissions": [
+        "webRequest",
+        "webRequestBlocking",
+        "storage",
+        "tabs",
         "cookies",
-        "activeTab",
         "scripting",
-        "storage"
+        "activeTab",
+        "<all_urls>"
     ],
     "host_permissions": [
         "<all_urls>"

@@ -1,11 +1,62 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 import numpy as np
 import torch.nn as nn
 import uvicorn
 import torch
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+import re
+import logging
+import traceback
+from pydantic import BaseModel
+from typing import Optional
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, 
+                   format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+
+# Define request model
+class PredictionRequest(BaseModel):
+    cookie_value: str
+
+# Utility functions for text preprocessing and character encoding
+def enhanced_preprocess_text(text):
+    """Preprocess the cookie text for better feature extraction."""
+    if not isinstance(text, str):
+        return ""
+    # Return the text as is - no special preprocessing needed for character encoding
+    return text
+
+def enhanced_char_encode(texts, char_to_idx, max_length):
+    """
+    Convert a list of text strings to a character-level encoded matrix.
+    
+    Args:
+        texts: List of text strings to encode
+        char_to_idx: Mapping from characters to indices
+        max_length: Maximum length of sequence
+        
+    Returns:
+        Numpy array of encoded characters, padded to max_length
+    """
+    result = np.zeros((len(texts), max_length), dtype=np.int64)
+    
+    for i, text in enumerate(texts):
+        if not isinstance(text, str):
+            continue
+            
+        # Convert characters to indices
+        char_indices = [char_to_idx.get(char, 0) for char in text[:max_length]]
+        
+        # Pad if necessary
+        if len(char_indices) < max_length:
+            char_indices = char_indices + [0] * (max_length - len(char_indices))
+            
+        result[i, :len(char_indices)] = char_indices
+        
+    return result
 
 class TokenAndPositionEmbedding(nn.Module):
     def __init__(self, vocab_size, embed_dim, max_length, device='cpu'):
@@ -85,13 +136,31 @@ class TransformerEncoderCls(nn.Module):
         return output
 
 # Load mô hình từ file
-model = TransformerEncoderCls(vocab_size=100000, max_length=128, embed_dim=128, num_heads=4, ff_dim=128, dropout=0.1, device='cpu')
-model.load_state_dict(torch.load('../model/model.pt', map_location=torch.device('cpu')))
-model.eval()
+try:
+    logger.info("Loading model...")
+    model = TransformerEncoderCls(vocab_size=100000, max_length=128, embed_dim=128, num_heads=4, ff_dim=128, dropout=0.1, device='cpu')
+    model_path = '../model/model.pt'
+    model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')))
+    model.eval()
+    logger.info("Model loaded successfully")
+except Exception as e:
+    logger.error(f"Error loading model: {str(e)}")
+    logger.error(traceback.format_exc())
+    # Still initialize model as None so the app can start
+    model = None
 
 class_names = np.array(['very low', 'low', 'average', 'high', 'very high'])
 
 app = FastAPI()
+
+# Enhanced CORS configuration
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # In production, restrict this to your extension's origin
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["*"],
+)
 
 app.mount("/templates", StaticFiles(directory="../templates"), name="templates")
 
@@ -99,43 +168,99 @@ app.mount("/templates", StaticFiles(directory="../templates"), name="templates")
 def read_root():
     return FileResponse('../templates/index.html')
 
-# Add CORS middleware
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # Allows all origins
-    allow_credentials=True,
-    allow_methods=["*"],  # Allows all methods
-    allow_headers=["*"],  # Allows all headers
-)
+@app.get('/health')
+def health_check():
+    """Health check endpoint to test if the API is running."""
+    if model is None:
+        return {"status": "unhealthy", "model_loaded": False, "error": "Model failed to load"}
+    
+    # Try a simple prediction to ensure the model works
+    try:
+        sample_value = "test_cookie_value_123"
+        processed_text = enhanced_preprocess_text(sample_value)
+        
+        char_to_idx = {}
+        char_to_idx['<PAD>'] = 0
+        for i, char in enumerate(set(processed_text)):
+            char_to_idx[char] = i + 1
+        
+        char_input_np = enhanced_char_encode([processed_text], char_to_idx, 128)
+        char_input_tensor = torch.tensor(char_input_np, dtype=torch.int64)
+        
+        with torch.no_grad():
+            output = model(char_input_tensor, model.device)
+            probabilities = torch.softmax(output, dim=1)
+            predicted_class = torch.argmax(probabilities, dim=1)
+            class_name = class_names[predicted_class.item()]
+        
+        return {
+            "status": "healthy", 
+            "model_loaded": True,
+            "test_prediction": {
+                "class": class_name,
+                "input": sample_value
+            }
+        }
+    except Exception as e:
+        logger.error(f"Health check prediction failed: {str(e)}")
+        return {
+            "status": "unhealthy", 
+            "model_loaded": True, 
+            "error": str(e),
+            "prediction_test": "failed"
+        }
 
 @app.post('/predict')
-def predict(data: dict):
+async def predict(data: PredictionRequest):
     """
-    Predicts the class of a given sequence.
+    Predicts the class of a given cookie value.
 
     Args:
-        data (dict): A dictionary containing the features to predict.
-        e.g. {"features": [1, 2, 3, 4, ...]}
+        data: PredictionRequest object containing cookie_value
 
     Returns:
-        dict: A dictionary containing the predicted class.
-    """        
-    # Convert input sequence to tensor and ensure it's the right shape
-    features = torch.tensor(data['sequence']).reshape(1, -1).long()
-    features = features.to(model.device)
-
-    # Make prediction
-    with torch.no_grad():
-        output = model(features, model.device)
-        # Get the prediction for the entire sequence
-        probabilities = torch.softmax(output, dim=1)
-        predicted_class = torch.argmax(probabilities, dim=1)
-        class_name = class_names[predicted_class.item()]
-    
-    return {
-        'predicted_class': class_name,
-        'probabilities': probabilities[0].tolist()
-    }
+        dict: A dictionary containing the predicted class and probabilities.
+    """
+    try:
+        logger.info(f"Received prediction request with cookie length: {len(data.cookie_value)}")
+        
+        if not data.cookie_value:
+            logger.warning("Empty cookie value received")
+            raise HTTPException(status_code=400, detail="Cookie value cannot be empty")
+        
+        # Process the cookie value
+        processed_text = enhanced_preprocess_text(data.cookie_value)
+        
+        # Create character to index mapping
+        char_to_idx = {}
+        char_to_idx['<PAD>'] = 0
+        for i, char in enumerate(set(processed_text)):
+            char_to_idx[char] = i + 1
+        
+        # Encode the character sequence
+        char_input_np = enhanced_char_encode([processed_text], char_to_idx, 128)
+        char_input_tensor = torch.tensor(char_input_np, dtype=torch.int64)
+        
+        logger.info(f"Encoded cookie to tensor shape: {char_input_tensor.shape}")
+        
+        # Make prediction
+        with torch.no_grad():
+            output = model(char_input_tensor, model.device)
+            probabilities = torch.softmax(output, dim=1)
+            predicted_class = torch.argmax(probabilities, dim=1)
+            class_name = class_names[predicted_class.item()]
+        
+        logger.info(f"Prediction successful: {class_name}")
+        
+        return {
+            'predicted_class': class_name,
+            'probabilities': probabilities[0].tolist()
+        }
+    except Exception as e:
+        logger.error(f"Error during prediction: {str(e)}")
+        logger.error(traceback.format_exc())
+        raise HTTPException(status_code=500, detail=f"Prediction error: {str(e)}")
 
 if __name__ == "__main__":
+    logger.info("Starting server...")
     uvicorn.run("server:app", host="0.0.0.0", port=8000, reload=True)
