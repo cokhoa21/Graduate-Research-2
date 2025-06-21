@@ -1,0 +1,319 @@
+2025-05-15-07:52:39 :: classifier :: INFO :: Total Accuracy Count: 79686
+2025-05-15-07:52:39 :: classifier :: INFO :: Total Accuracy Ratio: 0.8288882416576516
+2025-05-15-07:52:39 :: classifier :: INFO :: Micro Precision: 0.8288882416576516
+2025-05-15-07:52:39 :: classifier :: INFO :: Micro Recall: 0.8288882416576516
+2025-05-15-07:52:39 :: classifier :: INFO :: Micro F1Score: 0.8288882416576516
+2025-05-15-07:52:39 :: classifier :: INFO :: Macro Precision: 0.6027967835532544
+2025-05-15-07:52:39 :: classifier :: INFO :: Macro Recall: 0.7058998348729204
+2025-05-15-07:52:39 :: classifier :: INFO :: Macro F1Score: 0.622593627426418
+2025-05-15-07:52:39 :: classifier :: INFO :: Weighted Precision: 0.8661283727464394
+2025-05-15-07:52:39 :: classifier :: INFO :: Weighted Recall: 0.8288882416576516
+2025-05-15-07:52:39 :: classifier :: INFO :: Weighted F1Score: 0.8401049978734049
+2025-05-15-07:52:39 :: classifier :: INFO :: Precision for each class: [0.98077339 0.35821182 0.83682526 0.66999538 0.16817807]
+2025-05-15-07:52:39 :: classifier :: INFO :: Recall for each class: [0.90113499 0.56834094 0.63587617 0.8574804  0.56666667]
+2025-05-15-07:52:39 :: classifier :: INFO :: F1Score for each class: [0.93926912 0.43944922 0.72264104 0.75223177 0.25937699]
+2025-05-15-07:52:39 :: classifier :: INFO :: -------------------------------
+2025-05-15-07:52:39 :: classifier :: INFO :: (Old Method) Total Accuracy: 82.889%
+2025-05-15-07:52:39 :: classifier :: INFO :: (Old Method) Precision: [0.98077339 0.35821182 0.83682526 0.66999538 0.16817807]
+2025-05-15-07:52:39 :: classifier :: INFO :: (Old Method) Recall: [0.90113499 0.56834094 0.63587617 0.8574804  0.56666667]
+2025-05-15-07:52:39 :: classifier :: INFO :: (Old Method) F1 Scores: [0.93926912 0.43944922 0.72264104 0.75223177 0.25937699]
+2025-05-15-07:55:57 :: classifier :: INFO :: Total Accuracy Count: 76307
+2025-05-15-07:55:57 :: classifier :: INFO :: Total Accuracy Ratio: 0.7937483746814376
+2025-05-15-07:55:57 :: classifier :: INFO :: Micro Precision: 0.7937483746814376
+2025-05-15-07:55:57 :: classifier :: INFO :: Micro Recall: 0.7937483746814376
+2025-05-15-07:55:57 :: classifier :: INFO :: Micro F1Score: 0.7937483746814376
+2025-05-15-07:55:57 :: classifier :: INFO :: Macro Precision: 0.4936477203172001
+2025-05-15-07:55:57 :: classifier :: INFO :: Macro Recall: 0.5609241534360863
+2025-05-15-07:55:57 :: classifier :: INFO :: Macro F1Score: 0.49922966144939007
+2025-05-15-07:55:57 :: classifier :: INFO :: Weighted Precision: 0.8093244202812226
+2025-05-15-07:55:57 :: classifier :: INFO :: Weighted Recall: 0.7937483746814376
+2025-05-15-07:55:57 :: classifier :: INFO :: Weighted F1Score: 0.792973901047147
+2025-05-15-07:55:57 :: classifier :: INFO :: Precision for each class: [0.97705017 0.07792208 0.69107936 0.57114797 0.15103903]
+2025-05-15-07:55:57 :: classifier :: INFO :: Recall for each class: [0.87901773 0.00191877 0.63055266 0.8450113  0.4481203 ]
+2025-05-15-07:55:57 :: classifier :: INFO :: F1Score for each class: [0.92544504 0.00374532 0.65943004 0.68159917 0.22592873]
+2025-05-15-07:55:57 :: classifier :: INFO :: -------------------------------
+2025-05-15-07:55:57 :: classifier :: INFO :: (Old Method) Total Accuracy: 79.375%
+2025-05-15-07:55:57 :: classifier :: INFO :: (Old Method) Precision: [0.97705017 0.07792208 0.69107936 0.57114797 0.15103903]
+2025-05-15-07:55:57 :: classifier :: INFO :: (Old Method) Recall: [0.87901773 0.00191877 0.63055266 0.8450113  0.4481203 ]
+2025-05-15-07:55:57 :: classifier :: INFO :: (Old Method) F1 Scores: [0.92544504 0.00374532 0.65943004 0.68159917 0.22592873]
+2025-05-15-07:59:15 :: classifier :: INFO :: Total Accuracy Count: 79615
+2025-05-15-07:59:15 :: classifier :: INFO :: Total Accuracy Ratio: 0.8281583190305299
+2025-05-15-07:59:15 :: classifier :: INFO :: Micro Precision: 0.8281583190305299
+2025-05-15-07:59:15 :: classifier :: INFO :: Micro Recall: 0.8281583190305299
+2025-05-15-07:59:15 :: classifier :: INFO :: Micro F1Score: 0.8281583190305299
+2025-05-15-07:59:15 :: classifier :: INFO :: Macro Precision: 0.6009189884568593
+2025-05-15-07:59:15 :: classifier :: INFO :: Macro Recall: 0.6903273532258591
+2025-05-15-07:59:15 :: classifier :: INFO :: Macro F1Score: 0.6234495694679021
+2025-05-15-07:59:15 :: classifier :: INFO :: Weighted Precision: 0.8581535438331473
+2025-05-15-07:59:15 :: classifier :: INFO :: Weighted Recall: 0.8281583190305299
+2025-05-15-07:59:15 :: classifier :: INFO :: Weighted F1Score: 0.8369963061302277
+2025-05-15-07:59:15 :: classifier :: INFO :: Precision for each class: [0.98200148 0.36363636 0.79529279 0.65980756 0.20385675]
+2025-05-15-07:59:15 :: classifier :: INFO :: Recall for each class: [0.90652002 0.55293748 0.62713936 0.84755739 0.51748252]
+2025-05-15-07:59:15 :: classifier :: INFO :: F1Score for each class: [0.94275231 0.43873863 0.70127691 0.74198988 0.29249012]
+2025-05-15-07:59:15 :: classifier :: INFO :: -------------------------------
+2025-05-15-07:59:15 :: classifier :: INFO :: (Old Method) Total Accuracy: 82.816%
+2025-05-15-07:59:15 :: classifier :: INFO :: (Old Method) Precision: [0.98200148 0.36363636 0.79529279 0.65980756 0.20385675]
+2025-05-15-07:59:15 :: classifier :: INFO :: (Old Method) Recall: [0.90652002 0.55293748 0.62713936 0.84755739 0.51748252]
+2025-05-15-07:59:15 :: classifier :: INFO :: (Old Method) F1 Scores: [0.94275231 0.43873863 0.70127691 0.74198988 0.29249012]
+2025-05-15-08:02:32 :: classifier :: INFO :: Total Accuracy Count: 75441
+2025-05-15-08:02:33 :: classifier :: INFO :: Total Accuracy Ratio: 0.7847402090809799
+2025-05-15-08:02:33 :: classifier :: INFO :: Micro Precision: 0.7847402090809799
+2025-05-15-08:02:33 :: classifier :: INFO :: Micro Recall: 0.7847402090809799
+2025-05-15-08:02:33 :: classifier :: INFO :: Micro F1Score: 0.7847402090809799
+2025-05-15-08:02:33 :: classifier :: INFO :: Macro Precision: 0.555381093270087
+2025-05-15-08:02:33 :: classifier :: INFO :: Macro Recall: 0.664941499529526
+2025-05-15-08:02:33 :: classifier :: INFO :: Macro F1Score: 0.5695441248378688
+2025-05-15-08:02:33 :: classifier :: INFO :: Weighted Precision: 0.8356569269912488
+2025-05-15-08:02:33 :: classifier :: INFO :: Weighted Recall: 0.7847402090809799
+2025-05-15-08:02:33 :: classifier :: INFO :: Weighted F1Score: 0.8054288012471637
+2025-05-15-08:02:33 :: classifier :: INFO :: Precision for each class: [0.98443517 0.3839773  0.68421391 0.64332961 0.08094948]
+2025-05-15-08:02:33 :: classifier :: INFO :: Recall for each class: [0.87742596 0.5569981  0.59726196 0.73497951 0.55804196]
+2025-05-15-08:02:33 :: classifier :: INFO :: F1Score for each class: [0.92785543 0.4545807  0.63778796 0.68610745 0.14138909]
+2025-05-15-08:02:33 :: classifier :: INFO :: -------------------------------
+2025-05-15-08:02:33 :: classifier :: INFO :: (Old Method) Total Accuracy: 78.474%
+2025-05-15-08:02:33 :: classifier :: INFO :: (Old Method) Precision: [0.98443517 0.3839773  0.68421391 0.64332961 0.08094948]
+2025-05-15-08:02:33 :: classifier :: INFO :: (Old Method) Recall: [0.87742596 0.5569981  0.59726196 0.73497951 0.55804196]
+2025-05-15-08:02:33 :: classifier :: INFO :: (Old Method) F1 Scores: [0.92785543 0.4545807  0.63778796 0.68610745 0.14138909]
+2025-05-15-08:05:51 :: classifier :: INFO :: Total Accuracy Count: 79911
+2025-05-15-08:05:51 :: classifier :: INFO :: Total Accuracy Ratio: 0.831237322515213
+2025-05-15-08:05:51 :: classifier :: INFO :: Micro Precision: 0.831237322515213
+2025-05-15-08:05:51 :: classifier :: INFO :: Micro Recall: 0.831237322515213
+2025-05-15-08:05:51 :: classifier :: INFO :: Micro F1Score: 0.831237322515213
+2025-05-15-08:05:51 :: classifier :: INFO :: Macro Precision: 0.6104720083218541
+2025-05-15-08:05:51 :: classifier :: INFO :: Macro Recall: 0.6867624407835662
+2025-05-15-08:05:51 :: classifier :: INFO :: Macro F1Score: 0.6265105606329983
+2025-05-15-08:05:51 :: classifier :: INFO :: Weighted Precision: 0.8663902985011395
+2025-05-15-08:05:51 :: classifier :: INFO :: Weighted Recall: 0.831237322515213
+2025-05-15-08:05:51 :: classifier :: INFO :: Weighted F1Score: 0.8400191307647146
+2025-05-15-08:05:51 :: classifier :: INFO :: Precision for each class: [0.98389067 0.35532995 0.85517241 0.63386155 0.22410546]
+2025-05-15-08:05:51 :: classifier :: INFO :: Recall for each class: [0.91040198 0.54019293 0.61783757 0.86256283 0.5028169 ]
+2025-05-15-08:05:51 :: classifier :: INFO :: F1Score for each class: [0.94572083 0.42868079 0.71738502 0.73073577 0.3100304 ]
+2025-05-15-08:05:51 :: classifier :: INFO :: -------------------------------
+2025-05-15-08:05:51 :: classifier :: INFO :: (Old Method) Total Accuracy: 83.124%
+2025-05-15-08:05:51 :: classifier :: INFO :: (Old Method) Precision: [0.98389067 0.35532995 0.85517241 0.63386155 0.22410546]
+2025-05-15-08:05:51 :: classifier :: INFO :: (Old Method) Recall: [0.91040198 0.54019293 0.61783757 0.86256283 0.5028169 ]
+2025-05-15-08:05:51 :: classifier :: INFO :: (Old Method) F1 Scores: [0.94572083 0.42868079 0.71738502 0.73073577 0.3100304 ]
+2025-05-15-08:05:54 :: classifier :: INFO :: Cross-Validation Summary (5 folds):
+2025-05-15-08:05:54 :: classifier :: INFO :: Mean Accuracy: 0.8134 ± 0.0199
+2025-05-15-08:05:54 :: classifier :: INFO :: Mean Loss: 0.6759 ± 0.0550
+2025-05-15-08:05:54 :: classifier :: INFO :: Mean F1 Weighted: 0.8231 ± 0.0199
+2025-05-15-08:05:54 :: classifier :: INFO :: Mean F1 Macro: 0.5883 ± 0.0493
+2025-05-16-04:31:28 :: classifier :: INFO :: Total Accuracy Count: 3284
+2025-05-16-04:31:28 :: classifier :: INFO :: Total Accuracy Ratio: 0.03417034201547807
+2025-05-16-04:31:28 :: classifier :: INFO :: Micro Precision: 0.03417034201547807
+2025-05-16-04:31:28 :: classifier :: INFO :: Micro Recall: 0.03417034201547807
+2025-05-16-04:31:28 :: classifier :: INFO :: Micro F1Score: 0.03417034201547807
+2025-05-16-04:31:28 :: classifier :: INFO :: Macro Precision: 0.006834068403095614
+2025-05-16-04:31:28 :: classifier :: INFO :: Macro Recall: 0.2
+2025-05-16-04:31:28 :: classifier :: INFO :: Macro F1Score: 0.013216523672061234
+2025-05-16-04:31:28 :: classifier :: INFO :: Weighted Precision: 0.001167612273454746
+2025-05-16-04:31:28 :: classifier :: INFO :: Weighted Recall: 0.03417034201547807
+2025-05-16-04:31:28 :: classifier :: INFO :: Weighted F1Score: 0.0022580656706499727
+2025-05-16-04:31:28 :: classifier :: INFO :: Precision for each class: [0.         0.03417034 0.         0.         0.        ]
+2025-05-16-04:31:28 :: classifier :: INFO :: Recall for each class: [0. 1. 0. 0. 0.]
+2025-05-16-04:31:28 :: classifier :: INFO :: F1Score for each class: [0.         0.06608262 0.         0.         0.        ]
+2025-05-16-04:31:28 :: classifier :: INFO :: -------------------------------
+2025-05-16-04:31:28 :: classifier :: INFO :: (Old Method) Total Accuracy: 3.417%
+2025-05-16-04:31:28 :: classifier :: INFO :: (Old Method) Precision: [0.         0.03417034 0.         0.         0.        ]
+2025-05-16-04:31:28 :: classifier :: INFO :: (Old Method) Recall: [0. 1. 0. 0. 0.]
+2025-05-16-04:31:28 :: classifier :: INFO :: (Old Method) F1 Scores: [0.         0.06608262 0.         0.         0.        ]
+2025-05-16-04:41:16 :: classifier :: INFO :: Total Accuracy Count: 85323
+2025-05-16-04:41:16 :: classifier :: INFO :: Total Accuracy Ratio: 0.8875239244403761
+2025-05-16-04:41:16 :: classifier :: INFO :: Micro Precision: 0.8875239244403761
+2025-05-16-04:41:16 :: classifier :: INFO :: Micro Recall: 0.8875239244403761
+2025-05-16-04:41:16 :: classifier :: INFO :: Micro F1Score: 0.8875239244403761
+2025-05-16-04:41:16 :: classifier :: INFO :: Macro Precision: 0.7921418746222483
+2025-05-16-04:41:16 :: classifier :: INFO :: Macro Recall: 0.787023276086655
+2025-05-16-04:41:16 :: classifier :: INFO :: Macro F1Score: 0.7828638348316115
+2025-05-16-04:41:16 :: classifier :: INFO :: Weighted Precision: 0.9080729123585299
+2025-05-16-04:41:16 :: classifier :: INFO :: Weighted Recall: 0.8875239244403761
+2025-05-16-04:41:16 :: classifier :: INFO :: Weighted F1Score: 0.8916761982317625
+2025-05-16-04:41:16 :: classifier :: INFO :: Precision for each class: [0.99754329 0.76567657 0.90439879 0.68197962 0.61111111]
+2025-05-16-04:41:16 :: classifier :: INFO :: Recall for each class: [0.91585918 0.63561644 0.79331122 0.94866287 0.64166667]
+2025-05-16-04:41:16 :: classifier :: INFO :: F1Score for each class: [0.95495767 0.69461078 0.84522057 0.7935139  0.62601626]
+2025-05-16-04:41:16 :: classifier :: INFO :: -------------------------------
+2025-05-16-04:41:16 :: classifier :: INFO :: (Old Method) Total Accuracy: 88.752%
+2025-05-16-04:41:16 :: classifier :: INFO :: (Old Method) Precision: [0.99754329 0.76567657 0.90439879 0.68197962 0.61111111]
+2025-05-16-04:41:16 :: classifier :: INFO :: (Old Method) Recall: [0.91585918 0.63561644 0.79331122 0.94866287 0.64166667]
+2025-05-16-04:41:16 :: classifier :: INFO :: (Old Method) F1 Scores: [0.95495767 0.69461078 0.84522057 0.7935139  0.62601626]
+2025-05-16-05:38:54 :: classifier :: INFO :: Total Accuracy Count: 85709
+2025-05-16-05:38:54 :: classifier :: INFO :: Total Accuracy Ratio: 0.8915390696513272
+2025-05-16-05:38:54 :: classifier :: INFO :: Micro Precision: 0.8915390696513272
+2025-05-16-05:38:54 :: classifier :: INFO :: Micro Recall: 0.8915390696513272
+2025-05-16-05:38:54 :: classifier :: INFO :: Micro F1Score: 0.8915390696513272
+2025-05-16-05:38:54 :: classifier :: INFO :: Macro Precision: 0.7847458350793519
+2025-05-16-05:38:54 :: classifier :: INFO :: Macro Recall: 0.7900204252274181
+2025-05-16-05:38:54 :: classifier :: INFO :: Macro F1Score: 0.7788048333212029
+2025-05-16-05:38:54 :: classifier :: INFO :: Weighted Precision: 0.9096923534701147
+2025-05-16-05:38:54 :: classifier :: INFO :: Weighted Recall: 0.8915390696513272
+2025-05-16-05:38:54 :: classifier :: INFO :: Weighted F1Score: 0.8955207241762302
+2025-05-16-05:38:54 :: classifier :: INFO :: Precision for each class: [0.99808769 0.84658188 0.88853077 0.69430446 0.49622438]
+2025-05-16-05:38:54 :: classifier :: INFO :: Recall for each class: [0.92295061 0.64840183 0.8076838  0.93217699 0.63888889]
+2025-05-16-05:38:54 :: classifier :: INFO :: F1Score for each class: [0.95904974 0.73435615 0.84618058 0.79584632 0.55859138]
+2025-05-16-05:38:54 :: classifier :: INFO :: -------------------------------
+2025-05-16-05:38:54 :: classifier :: INFO :: (Old Method) Total Accuracy: 89.154%
+2025-05-16-05:38:54 :: classifier :: INFO :: (Old Method) Precision: [0.99808769 0.84658188 0.88853077 0.69430446 0.49622438]
+2025-05-16-05:38:54 :: classifier :: INFO :: (Old Method) Recall: [0.92295061 0.64840183 0.8076838  0.93217699 0.63888889]
+2025-05-16-05:38:54 :: classifier :: INFO :: (Old Method) F1 Scores: [0.95904974 0.73435615 0.84618058 0.79584632 0.55859138]
+2025-05-16-04:47:36 :: classifier :: INFO :: Total Accuracy Count: 84745
+2025-05-16-04:47:36 :: classifier :: INFO :: Total Accuracy Ratio: 0.8815207780725022
+2025-05-16-04:47:36 :: classifier :: INFO :: Micro Precision: 0.8815207780725022
+2025-05-16-04:47:36 :: classifier :: INFO :: Micro Recall: 0.8815207780725022
+2025-05-16-04:47:36 :: classifier :: INFO :: Micro F1Score: 0.8815207780725022
+2025-05-16-04:47:36 :: classifier :: INFO :: Macro Precision: 0.734570641731137
+2025-05-16-04:47:36 :: classifier :: INFO :: Macro Recall: 0.782110249937395
+2025-05-16-04:47:36 :: classifier :: INFO :: Macro F1Score: 0.751207135725997
+2025-05-16-04:47:36 :: classifier :: INFO :: Weighted Precision: 0.9016142824221806
+2025-05-16-04:47:36 :: classifier :: INFO :: Weighted Recall: 0.8815207780725022
+2025-05-16-04:47:36 :: classifier :: INFO :: Weighted F1Score: 0.8863375512482189
+2025-05-16-04:47:36 :: classifier :: INFO :: Precision for each class: [0.99670247 0.63323873 0.88946756 0.6903794  0.46306505]
+2025-05-16-04:47:36 :: classifier :: INFO :: Recall for each class: [0.90942995 0.64214902 0.79514707 0.93224626 0.63157895]
+2025-05-16-04:47:36 :: classifier :: INFO :: F1Score for each class: [0.95106832 0.63766275 0.83966684 0.79328662 0.53435115]
+2025-05-16-04:47:36 :: classifier :: INFO :: -------------------------------
+2025-05-16-04:47:36 :: classifier :: INFO :: (Old Method) Total Accuracy: 88.152%
+2025-05-16-04:47:36 :: classifier :: INFO :: (Old Method) Precision: [0.99670247 0.63323873 0.88946756 0.6903794  0.46306505]
+2025-05-16-04:47:36 :: classifier :: INFO :: (Old Method) Recall: [0.90942995 0.64214902 0.79514707 0.93224626 0.63157895]
+2025-05-16-04:47:36 :: classifier :: INFO :: (Old Method) F1 Scores: [0.95106832 0.63766275 0.83966684 0.79328662 0.53435115]
+2025-05-16-05:47:21 :: classifier :: INFO :: Total Accuracy Count: 85350
+2025-05-16-05:47:21 :: classifier :: INFO :: Total Accuracy Ratio: 0.887814011546263
+2025-05-16-05:47:21 :: classifier :: INFO :: Micro Precision: 0.887814011546263
+2025-05-16-05:47:21 :: classifier :: INFO :: Micro Recall: 0.887814011546263
+2025-05-16-05:47:21 :: classifier :: INFO :: Micro F1Score: 0.887814011546263
+2025-05-16-05:47:21 :: classifier :: INFO :: Macro Precision: 0.7418472051734308
+2025-05-16-05:47:21 :: classifier :: INFO :: Macro Recall: 0.7908064382634469
+2025-05-16-05:47:21 :: classifier :: INFO :: Macro F1Score: 0.7561886442204042
+2025-05-16-05:47:21 :: classifier :: INFO :: Weighted Precision: 0.9083094389899051
+2025-05-16-05:47:21 :: classifier :: INFO :: Weighted Recall: 0.887814011546263
+2025-05-16-05:47:21 :: classifier :: INFO :: Weighted F1Score: 0.8924892747711011
+2025-05-16-05:47:21 :: classifier :: INFO :: Precision for each class: [0.99841957 0.69289763 0.90964201 0.6916905  0.41658631]
+2025-05-16-05:47:21 :: classifier :: INFO :: Recall for each class: [0.92193355 0.6645347  0.78079641 0.93714347 0.64962406]
+2025-05-16-05:47:21 :: classifier :: INFO :: F1Score for each class: [0.95865338 0.67841985 0.84030889 0.79592303 0.50763807]
+2025-05-16-05:47:21 :: classifier :: INFO :: -------------------------------
+2025-05-16-05:47:21 :: classifier :: INFO :: (Old Method) Total Accuracy: 88.781%
+2025-05-16-05:47:21 :: classifier :: INFO :: (Old Method) Precision: [0.99841957 0.69289763 0.90964201 0.6916905  0.41658631]
+2025-05-16-05:47:21 :: classifier :: INFO :: (Old Method) Recall: [0.92193355 0.6645347  0.78079641 0.93714347 0.64962406]
+2025-05-16-05:47:21 :: classifier :: INFO :: (Old Method) F1 Scores: [0.95865338 0.67841985 0.84030889 0.79592303 0.50763807]
+2025-05-16-04:53:56 :: classifier :: INFO :: Total Accuracy Count: 85432
+2025-05-16-04:53:56 :: classifier :: INFO :: Total Accuracy Ratio: 0.8886669787278306
+2025-05-16-04:53:56 :: classifier :: INFO :: Micro Precision: 0.8886669787278306
+2025-05-16-04:53:56 :: classifier :: INFO :: Micro Recall: 0.8886669787278306
+2025-05-16-04:53:56 :: classifier :: INFO :: Micro F1Score: 0.8886669787278306
+2025-05-16-04:53:56 :: classifier :: INFO :: Macro Precision: 0.7755494585314391
+2025-05-16-04:53:56 :: classifier :: INFO :: Macro Recall: 0.7833480001915624
+2025-05-16-04:53:56 :: classifier :: INFO :: Macro F1Score: 0.77388921939347
+2025-05-16-04:53:56 :: classifier :: INFO :: Weighted Precision: 0.9078821075873891
+2025-05-16-04:53:56 :: classifier :: INFO :: Weighted Recall: 0.8886669787278306
+2025-05-16-04:53:56 :: classifier :: INFO :: Weighted F1Score: 0.8927196747775384
+2025-05-16-04:53:56 :: classifier :: INFO :: Precision for each class: [0.9972621  0.71622563 0.90517241 0.69043431 0.56865285]
+2025-05-16-04:53:56 :: classifier :: INFO :: Recall for each class: [0.91795075 0.64624568 0.79350967 0.94504789 0.61398601]
+2025-05-16-04:53:56 :: classifier :: INFO :: F1Score for each class: [0.95596423 0.67943848 0.84567097 0.79792184 0.59045057]
+2025-05-16-04:53:56 :: classifier :: INFO :: -------------------------------
+2025-05-16-04:53:56 :: classifier :: INFO :: (Old Method) Total Accuracy: 88.867%
+2025-05-16-04:53:56 :: classifier :: INFO :: (Old Method) Precision: [0.9972621  0.71622563 0.90517241 0.69043431 0.56865285]
+2025-05-16-04:53:56 :: classifier :: INFO :: (Old Method) Recall: [0.91795075 0.64624568 0.79350967 0.94504789 0.61398601]
+2025-05-16-04:53:56 :: classifier :: INFO :: (Old Method) F1 Scores: [0.95596423 0.67943848 0.84567097 0.79792184 0.59045057]
+2025-05-16-05:55:49 :: classifier :: INFO :: Total Accuracy Count: 85754
+2025-05-16-05:55:50 :: classifier :: INFO :: Total Accuracy Ratio: 0.8920164352213034
+2025-05-16-05:55:50 :: classifier :: INFO :: Micro Precision: 0.8920164352213034
+2025-05-16-05:55:50 :: classifier :: INFO :: Micro Recall: 0.8920164352213034
+2025-05-16-05:55:50 :: classifier :: INFO :: Micro F1Score: 0.8920164352213034
+2025-05-16-05:55:50 :: classifier :: INFO :: Macro Precision: 0.8027791268741012
+2025-05-16-05:55:50 :: classifier :: INFO :: Macro Recall: 0.7890726245675403
+2025-05-16-05:55:50 :: classifier :: INFO :: Macro F1Score: 0.7868401396851908
+2025-05-16-05:55:50 :: classifier :: INFO :: Weighted Precision: 0.9138711269592396
+2025-05-16-05:55:50 :: classifier :: INFO :: Weighted Recall: 0.8920164352213034
+2025-05-16-05:55:50 :: classifier :: INFO :: Weighted F1Score: 0.8961125196564358
+2025-05-16-05:55:50 :: classifier :: INFO :: Precision for each class: [0.99906248 0.8585567  0.91397154 0.68355491 0.55875   ]
+2025-05-16-05:55:50 :: classifier :: INFO :: Recall for each class: [0.92077693 0.65409991 0.78517448 0.96013698 0.62517483]
+2025-05-16-05:55:50 :: classifier :: INFO :: F1Score for each class: [0.95832358 0.7425107  0.84469154 0.79857588 0.59009901]
+2025-05-16-05:55:50 :: classifier :: INFO :: -------------------------------
+2025-05-16-05:55:50 :: classifier :: INFO :: (Old Method) Total Accuracy: 89.202%
+2025-05-16-05:55:50 :: classifier :: INFO :: (Old Method) Precision: [0.99906248 0.8585567  0.91397154 0.68355491 0.55875   ]
+2025-05-16-05:55:50 :: classifier :: INFO :: (Old Method) Recall: [0.92077693 0.65409991 0.78517448 0.96013698 0.62517483]
+2025-05-16-05:55:50 :: classifier :: INFO :: (Old Method) F1 Scores: [0.95832358 0.7425107  0.84469154 0.79857588 0.59009901]
+2025-05-16-05:00:17 :: classifier :: INFO :: Total Accuracy Count: 85601
+2025-05-16-05:00:17 :: classifier :: INFO :: Total Accuracy Ratio: 0.8904249232849638
+2025-05-16-05:00:17 :: classifier :: INFO :: Micro Precision: 0.8904249232849638
+2025-05-16-05:00:17 :: classifier :: INFO :: Micro Recall: 0.8904249232849638
+2025-05-16-05:00:17 :: classifier :: INFO :: Micro F1Score: 0.8904249232849638
+2025-05-16-05:00:17 :: classifier :: INFO :: Macro Precision: 0.7958546633883627
+2025-05-16-05:00:17 :: classifier :: INFO :: Macro Recall: 0.7831602300904341
+2025-05-16-05:00:17 :: classifier :: INFO :: Macro F1Score: 0.7824232391613976
+2025-05-16-05:00:17 :: classifier :: INFO :: Weighted Precision: 0.9085488530917122
+2025-05-16-05:00:17 :: classifier :: INFO :: Weighted Recall: 0.8904249232849638
+2025-05-16-05:00:17 :: classifier :: INFO :: Weighted F1Score: 0.8941774417744004
+2025-05-16-05:00:17 :: classifier :: INFO :: Precision for each class: [0.99791272 0.83071841 0.88335284 0.69362572 0.57366362]
+2025-05-16-05:00:17 :: classifier :: INFO :: Recall for each class: [0.91927832 0.6371121  0.80474668 0.93927944 0.61538462]
+2025-05-16-05:00:17 :: classifier :: INFO :: F1Score for each class: [0.95698291 0.72114695 0.84221961 0.79797455 0.59379217]
+2025-05-16-05:00:17 :: classifier :: INFO :: -------------------------------
+2025-05-16-05:00:17 :: classifier :: INFO :: (Old Method) Total Accuracy: 89.042%
+2025-05-16-05:00:17 :: classifier :: INFO :: (Old Method) Precision: [0.99791272 0.83071841 0.88335284 0.69362572 0.57366362]
+2025-05-16-05:00:17 :: classifier :: INFO :: (Old Method) Recall: [0.91927832 0.6371121  0.80474668 0.93927944 0.61538462]
+2025-05-16-05:00:17 :: classifier :: INFO :: (Old Method) F1 Scores: [0.95698291 0.72114695 0.84221961 0.79797455 0.59379217]
+2025-05-16-06:04:18 :: classifier :: INFO :: Total Accuracy Count: 85665
+2025-05-16-06:04:18 :: classifier :: INFO :: Total Accuracy Ratio: 0.8910906537681386
+2025-05-16-06:04:18 :: classifier :: INFO :: Micro Precision: 0.8910906537681386
+2025-05-16-06:04:18 :: classifier :: INFO :: Micro Recall: 0.8910906537681386
+2025-05-16-06:04:18 :: classifier :: INFO :: Micro F1Score: 0.8910906537681386
+2025-05-16-06:04:18 :: classifier :: INFO :: Macro Precision: 0.7909161695234006
+2025-05-16-06:04:18 :: classifier :: INFO :: Macro Recall: 0.7853652470364676
+2025-05-16-06:04:18 :: classifier :: INFO :: Macro F1Score: 0.7773942191990164
+2025-05-16-06:04:18 :: classifier :: INFO :: Weighted Precision: 0.913866714278559
+2025-05-16-06:04:18 :: classifier :: INFO :: Weighted Recall: 0.8910906537681386
+2025-05-16-06:04:18 :: classifier :: INFO :: Weighted F1Score: 0.895210973748673
+2025-05-16-06:04:18 :: classifier :: INFO :: Precision for each class: [0.99828333 0.84618644 0.92144135 0.68361923 0.50505051]
+2025-05-16-06:04:18 :: classifier :: INFO :: Recall for each class: [0.91960178 0.63236225 0.78050833 0.96498324 0.62937063]
+2025-05-16-06:04:18 :: classifier :: INFO :: F1Score for each class: [0.95732859 0.72381298 0.84513973 0.80029129 0.56039851]
+2025-05-16-06:04:18 :: classifier :: INFO :: -------------------------------
+2025-05-16-06:04:18 :: classifier :: INFO :: (Old Method) Total Accuracy: 89.109%
+2025-05-16-06:04:18 :: classifier :: INFO :: (Old Method) Precision: [0.99828333 0.84618644 0.92144135 0.68361923 0.50505051]
+2025-05-16-06:04:18 :: classifier :: INFO :: (Old Method) Recall: [0.91960178 0.63236225 0.78050833 0.96498324 0.62937063]
+2025-05-16-06:04:18 :: classifier :: INFO :: (Old Method) F1 Scores: [0.95732859 0.72381298 0.84513973 0.80029129 0.56039851]
+2025-05-16-05:06:37 :: classifier :: INFO :: Total Accuracy Count: 85454
+2025-05-16-05:06:37 :: classifier :: INFO :: Total Accuracy Ratio: 0.8888958235814219
+2025-05-16-05:06:37 :: classifier :: INFO :: Micro Precision: 0.8888958235814219
+2025-05-16-05:06:37 :: classifier :: INFO :: Micro Recall: 0.8888958235814219
+2025-05-16-05:06:37 :: classifier :: INFO :: Micro F1Score: 0.8888958235814219
+2025-05-16-05:06:37 :: classifier :: INFO :: Macro Precision: 0.7736735823573614
+2025-05-16-05:06:37 :: classifier :: INFO :: Macro Recall: 0.7858864538065815
+2025-05-16-05:06:37 :: classifier :: INFO :: Macro F1Score: 0.7745886860948815
+2025-05-16-05:06:37 :: classifier :: INFO :: Weighted Precision: 0.9056122245794275
+2025-05-16-05:06:37 :: classifier :: INFO :: Weighted Recall: 0.8888958235814219
+2025-05-16-05:06:37 :: classifier :: INFO :: Weighted F1Score: 0.8927311062248218
+2025-05-16-05:06:37 :: classifier :: INFO :: Precision for each class: [0.99658252 0.73249352 0.88319261 0.69575443 0.56034483]
+2025-05-16-05:06:37 :: classifier :: INFO :: Recall for each class: [0.92062638 0.63569132 0.80496042 0.92730909 0.64084507]
+2025-05-16-05:06:37 :: classifier :: INFO :: F1Score for each class: [0.95709983 0.68066793 0.8422638  0.79501436 0.5978975 ]
+2025-05-16-05:06:37 :: classifier :: INFO :: -------------------------------
+2025-05-16-05:06:37 :: classifier :: INFO :: (Old Method) Total Accuracy: 88.890%
+2025-05-16-05:06:37 :: classifier :: INFO :: (Old Method) Precision: [0.99658252 0.73249352 0.88319261 0.69575443 0.56034483]
+2025-05-16-05:06:37 :: classifier :: INFO :: (Old Method) Recall: [0.92062638 0.63569132 0.80496042 0.92730909 0.64084507]
+2025-05-16-05:06:37 :: classifier :: INFO :: (Old Method) F1 Scores: [0.95709983 0.68066793 0.8422638  0.79501436 0.5978975 ]
+2025-05-16-06:12:49 :: classifier :: INFO :: Total Accuracy Count: 78798
+2025-05-16-06:12:49 :: classifier :: INFO :: Total Accuracy Ratio: 0.8196598533312529
+2025-05-16-06:12:49 :: classifier :: INFO :: Micro Precision: 0.8196598533312529
+2025-05-16-06:12:49 :: classifier :: INFO :: Micro Recall: 0.8196598533312529
+2025-05-16-06:12:49 :: classifier :: INFO :: Micro F1Score: 0.8196598533312529
+2025-05-16-06:12:49 :: classifier :: INFO :: Macro Precision: 0.6761705260534497
+2025-05-16-06:12:49 :: classifier :: INFO :: Macro Recall: 0.7559781636683583
+2025-05-16-06:12:49 :: classifier :: INFO :: Macro F1Score: 0.6591285553276186
+2025-05-16-06:12:49 :: classifier :: INFO :: Weighted Precision: 0.9154736784885861
+2025-05-16-06:12:49 :: classifier :: INFO :: Weighted Recall: 0.8196598533312529
+2025-05-16-06:12:49 :: classifier :: INFO :: Weighted F1Score: 0.8520380140113293
+2025-05-16-06:12:49 :: classifier :: INFO :: Precision for each class: [0.99820091 0.17603616 0.88590077 0.83589917 0.48481562]
+2025-05-16-06:12:49 :: classifier :: INFO :: Recall for each class: [0.9156218  0.88906752 0.81154847 0.53407556 0.62957746]
+2025-05-16-06:12:49 :: classifier :: INFO :: F1Score for each class: [0.95512976 0.29388319 0.84709621 0.65173949 0.54779412]
+2025-05-16-06:12:49 :: classifier :: INFO :: -------------------------------
+2025-05-16-06:12:49 :: classifier :: INFO :: (Old Method) Total Accuracy: 81.966%
+2025-05-16-06:12:49 :: classifier :: INFO :: (Old Method) Precision: [0.99820091 0.17603616 0.88590077 0.83589917 0.48481562]
+2025-05-16-06:12:49 :: classifier :: INFO :: (Old Method) Recall: [0.9156218  0.88906752 0.81154847 0.53407556 0.62957746]
+2025-05-16-06:12:49 :: classifier :: INFO :: (Old Method) F1 Scores: [0.95512976 0.29388319 0.84709621 0.65173949 0.54779412]
+2025-05-16-05:06:41 :: classifier :: INFO :: Cross-Validation Summary (5 folds):
+2025-05-16-05:06:41 :: classifier :: INFO :: Mean Accuracy: 0.8874 ± 0.0031
+2025-05-16-05:06:41 :: classifier :: INFO :: Mean Loss: 0.4078 ± 0.0094
+2025-05-16-05:06:41 :: classifier :: INFO :: Mean F1 Weighted: 0.8915 ± 0.0027
+2025-05-16-05:06:41 :: classifier :: INFO :: Mean F1 Macro: 0.7730 ± 0.0115
+2025-05-16-06:12:55 :: classifier :: INFO :: Cross-Validation Summary (5 folds):
+2025-05-16-06:12:56 :: classifier :: INFO :: Mean Accuracy: 0.8764 ± 0.0284
+2025-05-16-06:12:56 :: classifier :: INFO :: Mean Loss: 0.4184 ± 0.0202
+2025-05-16-06:12:56 :: classifier :: INFO :: Mean F1 Weighted: 0.8863 ± 0.0172
+2025-05-16-06:12:56 :: classifier :: INFO :: Mean F1 Macro: 0.7517 ± 0.0474
