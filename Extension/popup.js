@@ -1,16 +1,43 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const extractBtn = document.getElementById('extractBtn');
-    const predictBtn = document.getElementById('predictBtn');
     const clearBtn = document.getElementById('clearBtn');
-    const saveApiBtn = document.getElementById('saveApiBtn');
     const status = document.getElementById('status');
-    const apiUrl = document.getElementById('apiUrl');
+    const statusOverview = document.getElementById('statusOverview');
+    const seleniumStatus = document.getElementById('seleniumStatus');
+    const seleniumStatusOverview = document.getElementById('seleniumStatusOverview');
     const predictionResult = document.getElementById('predictionResult');
     const predictionStats = document.getElementById('predictionStats');
-    const seleniumExtractBtn = document.getElementById('seleniumExtractBtn');
-    const seleniumStatus = document.getElementById('seleniumStatus');
     const seleniumCookiesBox = document.getElementById('seleniumCookiesBox');
     const allCookiesBox = document.getElementById('allCookiesBox');
+    const domainName = document.getElementById('domainName');
+    const overviewLoading = document.getElementById('overviewLoading');
+
+    // History elements
+    const historyList = document.getElementById('historyList');
+    const clearHistoryBtn = document.getElementById('clearHistoryBtn');
+    const cleanDuplicatesBtn = document.getElementById('cleanDuplicatesBtn');
+
+    // Top websites elements
+    const topWebsitesList = document.getElementById('topWebsitesList');
+
+
+
+    // Tab functionality
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const targetTab = button.dataset.tab;
+
+            // Remove active class from all buttons and contents
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+
+            // Add active class to clicked button and corresponding content
+            button.classList.add('active');
+            document.getElementById(targetTab).classList.add('active');
+        });
+    });
 
     // Declare section ONCE after DOMContentLoaded
     const section = document.querySelector('.section');
@@ -21,82 +48,26 @@ document.addEventListener('DOMContentLoaded', () => {
         selenium: []
     };
 
+    // Flag to track if prediction is running
+    let isPredictionRunning = false;
+
+    // Storage data for new features
+    let browsingHistory = [];
+    let currentFilter = 'all';
+    let currentPeriod = 'all';
+
+    // Initialize all features
+    initializeFeatures();
+
     // Đảm bảo rằng updateAndDisplayAllCookies được gọi ngay khi popup mở
     setTimeout(() => {
         updateAndDisplayAllCookies();
     }, 100);
 
-    // Add API test button
-    const testApiBtn = document.createElement('button');
-    testApiBtn.textContent = "Test API";
-    testApiBtn.classList.add('blue');
-    testApiBtn.style.marginLeft = '5px';
-    saveApiBtn.parentNode.insertBefore(testApiBtn, saveApiBtn.nextSibling);
-
-    testApiBtn.addEventListener('click', testApiConnectivity);
-
-    // Charger l'URL de l'API sauvegardée
-    chrome.storage.local.get(['savedApiUrl'], (data) => {
-        if (data.savedApiUrl) {
-            apiUrl.value = data.savedApiUrl;
-        } else {
-            // Set default API URL if none is saved
-            apiUrl.value = "http://localhost:8000/predict";
-        }
-        // Test API connectivity on popup open
-        testApiConnectivity();
-    });
-
-    // Function to test API connectivity
-    function testApiConnectivity() {
-        const apiUrlValue = apiUrl.value.trim();
-        if (!apiUrlValue) return;
-
-        // Extract base URL (without endpoint)
-        let baseUrl = apiUrlValue;
-        if (baseUrl.endsWith('/predict')) {
-            baseUrl = baseUrl.substring(0, baseUrl.length - 8); // Remove '/predict'
-        }
-
-        // First check health endpoint
-        const healthUrl = `${baseUrl}/health`;
-        status.textContent = "Testing API health...";
-
-        fetch(healthUrl)
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'healthy') {
-                    status.textContent = "API health check: OK";
-
-                    // Now test a prediction with the actual endpoint
-                    status.textContent = "Testing prediction endpoint...";
-                    return fetch(apiUrlValue, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ cookie_value: "test" })
-                    });
-                } else {
-                    status.textContent = `API health check failed: ${data.error || 'Unknown error'}`;
-                    throw new Error(data.error || 'API health check failed');
-                }
-            })
-            .then(response => {
-                if (!response.ok) {
-                    status.textContent = `API prediction test failed: ${response.status}`;
-                    throw new Error(`HTTP Error: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                status.textContent = "API connection successful";
-                console.log("Test prediction result:", data);
-                setTimeout(() => { status.textContent = ""; }, 3000);
-            })
-            .catch(error => {
-                console.error("API connection error:", error);
-                status.textContent = `API connection error: ${error.message}`;
-            });
-    }
+    // Auto-extract cookies when extension opens
+    setTimeout(() => {
+        extractCookiesAutomatically();
+    }, 200);
 
     // Khôi phục cookies đã lưu từ trước nếu có
     chrome.storage.local.get(['allCookies'], (data) => {
@@ -111,24 +82,89 @@ document.addEventListener('DOMContentLoaded', () => {
             chrome.storage.local.get(['cookieValues'], (oldData) => {
                 if (oldData.cookieValues && oldData.cookieValues.length > 0) {
                     allCookies.standard = oldData.cookieValues;
-                    status.textContent = `${oldData.cookieValues.length} cookies disponibles`;
+                    updateStatus(`${oldData.cookieValues.length} cookies disponibles`);
                     console.log("Khôi phục cookies từ cookieValues cũ:", oldData.cookieValues.length);
                 }
             });
         }
     });
 
+    // Function to update status in relevant tabs
+    function updateStatus(message) {
+        if (status) status.textContent = message;
+        if (statusOverview) statusOverview.textContent = message;
+    }
+
+    // Function to update selenium status in relevant tabs
+    function updateSeleniumStatus(message) {
+        if (seleniumStatus) seleniumStatus.textContent = message;
+        if (seleniumStatusOverview) seleniumStatusOverview.textContent = message;
+    }
+
+    // Function to automatically extract cookies
+    function extractCookiesAutomatically() {
+        updateStatus("Đang trích xuất cookies...");
+
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            const activeTab = tabs[0];
+            if (activeTab && activeTab.url) {
+                // Update domain name
+                try {
+                    const url = new URL(activeTab.url);
+                    domainName.textContent = url.hostname;
+                } catch (e) {
+                    domainName.textContent = "Không xác định được domain";
+                }
+
+                // 1. Send message to background script to extract standard cookies
+                chrome.runtime.sendMessage({
+                    action: "extractCookies",
+                    tabUrl: activeTab.url
+                });
+
+                // 2. Also try to extract cookies using Selenium server (parallel)
+                updateSeleniumStatus("Đang lấy cookies từ server Selenium...");
+                fetch('http://localhost:5000/extract_cookies', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url: activeTab.url })
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.cookies && Array.isArray(data.cookies)) {
+                            updateSeleniumStatus(`Đã lấy ${data.cookies.length} cookies từ server Selenium`);
+
+                            // Cập nhật cookies Selenium
+                            allCookies.selenium = data.cookies;
+
+                            // Lưu lại tất cả các cookies và cập nhật giao diện
+                            saveCookiesAndUpdateUI();
+                        } else {
+                            updateSeleniumStatus('Không lấy được cookies từ server Selenium');
+                        }
+                    })
+                    .catch(err => {
+                        updateSeleniumStatus('Selenium server không khả dụng');
+                        console.log('Selenium server error:', err.message);
+                        // Không hiển thị lỗi cho người dùng vì đây không phải lỗi nghiêm trọng
+                    });
+            } else {
+                updateStatus("Không tìm thấy tab đang hoạt động");
+            }
+        });
+    }
+
     // Listen for messages from background script
     chrome.runtime.onMessage.addListener((message) => {
         if (message.action === "cookiesExtracted") {
             if (message.error) {
-                status.textContent = `Erreur: ${message.error}`;
+                updateStatus(`Lỗi: ${message.error}`);
             } else {
                 chrome.storage.local.get(['cookieValues'], (data) => {
                     if (data.cookieValues) {
                         // Cập nhật cookies tiêu chuẩn
                         allCookies.standard = data.cookieValues;
-                        status.textContent = `${data.cookieValues.length} cookies extraits`;
+                        updateStatus(`Đã trích xuất ${data.cookieValues.length} cookies`);
                         console.log(`Đã trích xuất ${data.cookieValues.length} cookies tiêu chuẩn`);
 
                         // Lưu lại tất cả các cookies
@@ -159,73 +195,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Save API URL
-    saveApiBtn.addEventListener('click', () => {
-        const url = apiUrl.value.trim();
-        if (url) {
-            chrome.storage.local.set({ savedApiUrl: url }, () => {
-                status.textContent = "API URL saved";
-                setTimeout(() => {
-                    status.textContent = "";
-                }, 2000);
-            });
-        }
-    });
+    // Function to update cookie counts in all tabs
+    function updateCookieCounts(counts) {
+        // Update cookies tab
+        document.getElementById('standardCount').textContent = counts.standard;
+        document.getElementById('headerCount').textContent = counts.header;
+        document.getElementById('seleniumCount').textContent = counts.selenium;
 
-    // Extract cookies tiêu chuẩn
-    extractBtn.addEventListener('click', () => {
-        status.textContent = "Extraction en cours...";
-
-        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-            const activeTab = tabs[0];
-            if (activeTab && activeTab.url) {
-                // Send message to background script to extract cookies
-                chrome.runtime.sendMessage({
-                    action: "extractCookies",
-                    tabUrl: activeTab.url
-                });
-            } else {
-                status.textContent = "Aucun onglet actif trouvé";
-            }
-        });
-    });
-
-    // Lấy cookies nâng cao bằng Selenium (gọi server Flask)
-    seleniumExtractBtn.addEventListener('click', () => {
-        seleniumStatus.textContent = "Đang lấy cookies từ server Selenium...";
-        seleniumCookiesBox.textContent = "";
-        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-            const activeTab = tabs[0];
-            if (activeTab && activeTab.url) {
-                fetch('http://localhost:5000/extract_cookies', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ url: activeTab.url })
-                })
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.cookies && Array.isArray(data.cookies)) {
-                            seleniumStatus.textContent = `Đã lấy ${data.cookies.length} cookies từ server Selenium`;
-
-                            // Cập nhật cookies Selenium
-                            allCookies.selenium = data.cookies;
-
-                            // Lưu lại tất cả các cookies và cập nhật giao diện
-                            saveCookiesAndUpdateUI();
-                        } else {
-                            seleniumStatus.textContent = 'Không lấy được cookies từ server Selenium';
-                            seleniumCookiesBox.textContent = '';
-                        }
-                    })
-                    .catch(err => {
-                        seleniumStatus.textContent = 'Lỗi khi gọi server Selenium: ' + err.message;
-                        seleniumCookiesBox.textContent = '';
-                    });
-            } else {
-                seleniumStatus.textContent = "Aucun onglet actif trouvé";
-            }
-        });
-    });
+        // Update overview tab
+        document.getElementById('standardCountOverview').textContent = counts.standard;
+        document.getElementById('headerCountOverview').textContent = counts.header;
+        document.getElementById('seleniumCountOverview').textContent = counts.selenium;
+    }
 
     // Hàm gộp và hiển thị tất cả cookies
     function updateAndDisplayAllCookies() {
@@ -372,14 +353,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     cookieTitle.appendChild(tabInfoElement);
                 }
 
-                // Cập nhật các badge hiển thị số lượng
-                document.getElementById('standardCount').textContent = counts.standard;
-                document.getElementById('headerCount').textContent = counts.header;
-                document.getElementById('seleniumCount').textContent = counts.selenium;
+                // Cập nhật các badge hiển thị số lượng cho tất cả tab
+                updateCookieCounts(counts);
 
                 console.log("Thống kê cookies:", counts);
 
-                // Hiển thị
+                // Hiển thị cookies trong cookies tab
                 if ((uniqueCookies || []).length === 0) {
                     allCookiesBox.innerHTML = '<i>Không có cookie nào</i>';
                 } else {
@@ -437,24 +416,27 @@ document.addEventListener('DOMContentLoaded', () => {
                     selenium: predictionCookies.filter(c => c.source === 'selenium').length
                 });
 
-                // Thêm tính năng mới: Tự động dự đoán khi cập nhật cookies
-                if (predictionCookies.length > 0) {
-                    status.textContent = `Đã tìm thấy ${predictionCookies.length} cookies. Đang dự đoán...`;
+                // Auto-predict when cookies are updated
+                if (predictionCookies.length > 0 && !isPredictionRunning) {
+                    updateStatus(`Đã tìm thấy ${predictionCookies.length} cookies. Đang dự đoán...`);
                     setTimeout(() => {
-                        predictBtn.click();
+                        runPrediction();
                     }, 500);
                 }
             });
         });
     }
 
-    // Khi bấm Dự đoán, dùng danh sách đã gộp
-    predictBtn.addEventListener('click', async () => {
-        const backendApiUrl = apiUrl.value.trim();
-        if (!backendApiUrl) {
-            status.textContent = "API URL không được định nghĩa";
+    // Function to run prediction (extracted from predictBtn click handler)
+    async function runPrediction() {
+        if (isPredictionRunning) {
+            console.log("Prediction already running, skipping...");
             return;
         }
+
+        console.log("Starting runPrediction...");
+        isPredictionRunning = true;
+        const backendApiUrl = "http://localhost:8000/predict"; // Fixed API URL
 
         // Lấy cookies đã gộp - đảm bảo rằng chúng ta có tất cả cookies từ mọi nguồn
         // window._allCookiesForPrediction đã được tạo trong updateAndDisplayAllCookies
@@ -468,7 +450,7 @@ document.addEventListener('DOMContentLoaded', () => {
             : [];
 
         // Log thông tin về cookies chuẩn bị dự đoán
-        console.log(`Chuẩn bị dự đoán:`, {
+        console.log(`Preparing to predict:`, {
             total: cookiesToProcess.length,
             standard: cookiesToProcess.filter(c => c.source === 'standard').length,
             header: cookiesToProcess.filter(c => c.source === 'header').length,
@@ -476,17 +458,22 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (cookiesToProcess.length === 0) {
-            status.textContent = "Không có cookies để xử lý";
+            console.log("No cookies to process");
+            updateStatus("Không có cookies để xử lý");
+            isPredictionRunning = false;
             return;
         }
 
-        status.textContent = `Đang dự đoán ${cookiesToProcess.length} cookies...`;
-        predictionResult.textContent = "Đang đợi kết quả dự đoán...";
+        updateStatus(`Đang dự đoán ${cookiesToProcess.length} cookies...`);
+        if (predictionResult) predictionResult.textContent = "Đang đợi kết quả dự đoán...";
 
         // Ẩn container đánh giá rủi ro khi bắt đầu dự đoán mới
-        document.getElementById('websiteRiskContainer').style.display = 'none';
+        const riskContainer = document.getElementById('websiteRiskContainer');
+        if (riskContainer) riskContainer.style.display = 'none';
 
         try {
+            console.log("Making API call to:", backendApiUrl.replace('/predict', '/predict_bulk'));
+
             // Sử dụng API /predict_bulk để dự đoán toàn bộ cookies cùng lúc
             const bulkUrl = backendApiUrl.replace('/predict', '/predict_bulk');
 
@@ -497,6 +484,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 body: JSON.stringify({ cookies: cookiesToProcess })
             });
+
+            console.log("API response status:", bulkResponse.status);
 
             if (!bulkResponse.ok) {
                 const errorText = await bulkResponse.text();
@@ -513,10 +502,20 @@ document.addEventListener('DOMContentLoaded', () => {
             const riskDistribution = bulkResult.risk_distribution || {};
             const websiteRisk = bulkResult.website_risk || { score: 0, level: "N/A" };
 
+            console.log("Processing prediction results:", {
+                predictionsCount: predictions.length,
+                riskDistribution,
+                websiteRisk
+            });
+
+            // Hide loading spinner
+            if (overviewLoading) overviewLoading.style.display = 'none';
+
             // Hiển thị đánh giá rủi ro tổng thể
+            console.log("Calling displayWebsiteRisk...");
             displayWebsiteRisk(websiteRisk, riskDistribution);
 
-            // Format and display results
+            // Format and display results for cookies tab
             // Sắp xếp kết quả theo tên cookie rồi theo nguồn để dễ so sánh
             predictions.sort((a, b) => {
                 // Sắp xếp theo tên cookie trước
@@ -583,7 +582,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
             }).join('');
 
-            predictionResult.innerHTML = formattedResults;
+            if (predictionResult) predictionResult.innerHTML = formattedResults;
 
             // Tạo phần thống kê dự đoán
             const successfulPredictions = predictions.filter(p => !p.error);
@@ -601,7 +600,7 @@ document.addEventListener('DOMContentLoaded', () => {
             };
 
             // Hiển thị thông tin chi tiết về kết quả dự đoán, bao gồm cả số lượng cookie trùng tên
-            status.textContent = `Dự đoán thành công: ${stats.success}/${stats.total} cookies (${stats.bySource.standard} standard, ${stats.bySource.header} header, ${stats.bySource.selenium} selenium)`;
+            updateStatus(`Dự đoán thành công: ${stats.success}/${stats.total} cookies`);
 
             // Hiển thị thống kê theo nhãn dự đoán
             const riskLevels = ['VERY LOW', 'LOW', 'AVERAGE', 'HIGH', 'VERY HIGH'];
@@ -623,21 +622,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
 
-            predictionStats.innerHTML = `
+            const statsContent = `
                 <div><strong>Tổng số cookies: ${stats.total}</strong> (${stats.success} thành công, ${stats.error} lỗi)</div>
                 <div><strong>Theo nguồn:</strong> ${stats.bySource.standard} tiêu chuẩn, ${stats.bySource.header} header, ${stats.bySource.selenium} selenium</div>
                 ${riskStatsHTML}
                 <div><strong>Đánh giá rủi ro tổng thể:</strong> ${websiteRisk.level} (${Math.round(websiteRisk.score * 100)}%)</div>
             `;
 
+            // Only update detailed stats in statistics tab
+            if (predictionStats) predictionStats.innerHTML = statsContent;
+
             console.log("Prediction stats:", stats);
 
         } catch (error) {
-            status.textContent = `Lỗi: ${error.message}`;
-            predictionResult.textContent = "Dự đoán thất bại";
+            updateStatus(`Lỗi: ${error.message}`);
+            if (predictionResult) predictionResult.textContent = "Dự đoán thất bại";
             document.getElementById('websiteRiskContainer').style.display = 'none';
+            overviewLoading.style.display = 'none';
+        } finally {
+            isPredictionRunning = false;
         }
-    });
+    }
 
     // Hàm hiển thị đánh giá rủi ro tổng thể của website
     function displayWebsiteRisk(websiteRisk, riskDistribution) {
@@ -710,26 +715,418 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             riskDistributionChart.innerHTML = '<div style="padding: 5px;">Không có dữ liệu</div>';
         }
+
+        // Save to browsing history after displaying risk
+        try {
+            saveToHistoryAfterPrediction(websiteRisk, riskDistribution);
+        } catch (e) {
+            console.error('Error saving to history:', e);
+        }
     }
 
     // Clear data
     clearBtn.addEventListener('click', () => {
-        predictionResult.textContent = '';
-        predictionStats.textContent = '';
+        if (predictionResult) predictionResult.textContent = '';
+        if (predictionStats) predictionStats.textContent = '';
         allCookies = { standard: [], selenium: [] };
+        isPredictionRunning = false;
         chrome.storage.local.remove(['cookieValues', 'allCookies', 'detectedCookiesByTab'], () => {
-            status.textContent = "Data cleared";
+            updateStatus("Đã xóa dữ liệu cookies");
             allCookiesBox.innerHTML = '<i>Không có cookie nào</i>';
             seleniumCookiesBox.textContent = '';
             // Cập nhật số liệu hiển thị
-            document.getElementById('standardCount').textContent = '0';
-            document.getElementById('headerCount').textContent = '0';
-            document.getElementById('seleniumCount').textContent = '0';
+            updateCookieCounts({ standard: 0, header: 0, selenium: 0 });
+            document.getElementById('websiteRiskContainer').style.display = 'none';
+            overviewLoading.style.display = 'block';
+            domainName.textContent = "Đang phân tích...";
             setTimeout(() => {
-                status.textContent = "";
+                updateStatus("");
+                updateSeleniumStatus("");
             }, 2000);
         });
     });
-});
 
-// Créez un dossier images/ avec des icônes 16x16, 48x48 et 128x128
+    // ========== NEW FEATURES IMPLEMENTATION ==========
+
+    // Initialize all new features
+    function initializeFeatures() {
+        loadStoredData();
+        setupEventListeners();
+        setupFilterControls();
+    }
+
+    // Load data from storage
+    function loadStoredData() {
+        chrome.storage.local.get(['browsingHistory'], (data) => {
+            browsingHistory = data.browsingHistory || [];
+
+            displayHistory();
+            displayTopWebsites();
+        });
+    }
+
+    // Setup event listeners for new features
+    function setupEventListeners() {
+        // History controls
+        if (clearHistoryBtn) {
+            clearHistoryBtn.addEventListener('click', clearHistory);
+        }
+        if (cleanDuplicatesBtn) {
+            cleanDuplicatesBtn.addEventListener('click', cleanDuplicates);
+        }
+
+
+    }
+
+    // Setup filter controls
+    function setupFilterControls() {
+        // History filters
+        document.querySelectorAll('[data-filter]').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('[data-filter]').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentFilter = e.target.dataset.filter;
+                displayHistory();
+            });
+        });
+
+        // Top websites period filters
+        document.querySelectorAll('[data-period]').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('[data-period]').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentPeriod = e.target.dataset.period;
+                displayTopWebsites();
+            });
+        });
+    }
+
+    // Save browsing history entry
+    function saveBrowsingHistory(domain, riskData) {
+        // Check if we recently saved this domain (within 5 minutes)
+        const now = new Date();
+        const fiveMinutesAgo = new Date(now.getTime() - 5 * 60 * 1000);
+
+        // Find recent entries for this domain
+        const recentEntries = browsingHistory.filter(entry =>
+            entry.domain === domain &&
+            new Date(entry.timestamp) > fiveMinutesAgo
+        );
+
+        // If we have a recent entry, check if there's significant change
+        if (recentEntries.length > 0) {
+            const lastEntry = recentEntries[0];
+
+            // Only save if there's significant change in risk level or cookie count
+            const riskLevelChanged = lastEntry.riskLevel !== (riskData.level || 'UNKNOWN');
+            const cookieCountChanged = Math.abs(lastEntry.cookieCount - (riskData.cookieCount || 0)) > 5;
+            const riskScoreChanged = Math.abs(lastEntry.riskScore - (riskData.score || 0)) > 0.1;
+
+            if (!riskLevelChanged && !cookieCountChanged && !riskScoreChanged) {
+                console.log(`Skipping duplicate entry for ${domain} - no significant changes`);
+                return; // Skip saving if no significant changes
+            }
+        }
+
+        const entry = {
+            domain: domain,
+            timestamp: new Date().toISOString(),
+            riskScore: riskData.score || 0,
+            riskLevel: riskData.level || 'UNKNOWN',
+            cookieCount: riskData.cookieCount || 0,
+            riskDistribution: riskData.distribution || {}
+        };
+
+
+
+        browsingHistory.unshift(entry);
+
+        // Keep only last 1000 entries
+        if (browsingHistory.length > 1000) {
+            browsingHistory = browsingHistory.slice(0, 1000);
+        }
+
+        console.log(`Saved browsing history for ${domain}:`, entry);
+        chrome.storage.local.set({ browsingHistory });
+        displayHistory();
+        displayTopWebsites();
+    }
+
+    // Display browsing history
+    function displayHistory() {
+        if (!historyList) return;
+
+        let filteredHistory = filterHistory(browsingHistory, currentFilter);
+
+        if (filteredHistory.length === 0) {
+            historyList.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-state-icon">📊</div>
+                    <div class="empty-state-text">Không có lịch sử nào phù hợp với bộ lọc.</div>
+                </div>
+            `;
+            return;
+        }
+
+        const historyHTML = filteredHistory.map(entry => {
+            const riskColor = getRiskColor(entry.riskLevel);
+            const timeStr = formatTime(entry.timestamp);
+            const statusBadge = getStatusBadge(entry.status);
+
+            return `
+                <div class="history-item">
+                    <div class="history-header">
+                        <div class="history-domain">${entry.domain} ${statusBadge}</div>
+                        <div class="history-time">${timeStr}</div>
+                    </div>
+                    <div class="history-risk">
+                        <div class="history-risk-score" style="background-color: ${riskColor}">
+                            ${entry.riskLevel}
+                        </div>
+                        <div class="history-cookies-count">${entry.cookieCount} cookies</div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        historyList.innerHTML = historyHTML;
+    }
+
+    // Display top risky websites
+    function displayTopWebsites() {
+        if (!topWebsitesList) return;
+
+        const topSites = getTopRiskySites(browsingHistory, currentPeriod);
+
+        if (topSites.length === 0) {
+            topWebsitesList.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-state-icon">🏆</div>
+                    <div class="empty-state-text">Chưa có dữ liệu trong khoảng thời gian này.</div>
+                </div>
+            `;
+            return;
+        }
+
+        const topHTML = topSites.map((site, index) => {
+            const riskColor = getRiskColor(site.riskLevel);
+            const ranking = index + 1;
+
+            return `
+                <div class="top-website-item">
+                    <div class="top-website-info">
+                        <div class="top-website-domain">#${ranking} ${site.domain}</div>
+                        <div class="top-website-stats">
+                            Avg Risk: ${Math.round(site.avgRisk)}% | ${site.totalCookies} cookies
+                        </div>
+                    </div>
+                    <div class="top-website-risk">
+                        <div class="top-website-score" style="background-color: ${riskColor}">
+                            ${site.riskLevel}
+                        </div>
+                        <div class="top-website-visits">${site.visits} visits</div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        topWebsitesList.innerHTML = topHTML;
+    }
+
+
+
+    // Clear history
+    function clearHistory() {
+        if (confirm('Bạn có chắc muốn xóa toàn bộ lịch sử?')) {
+            browsingHistory = [];
+            chrome.storage.local.set({ browsingHistory });
+            displayHistory();
+            displayTopWebsites();
+        }
+    }
+
+    // Clean duplicate entries
+    function cleanDuplicates() {
+        if (confirm('Dọn dẹp các entries trùng lặp trong vòng 5 phút?')) {
+            const cleanedHistory = [];
+            const seen = new Map(); // domain -> latest timestamp
+
+            // Sort by timestamp (newest first)
+            const sortedHistory = [...browsingHistory].sort((a, b) =>
+                new Date(b.timestamp) - new Date(a.timestamp)
+            );
+
+            sortedHistory.forEach(entry => {
+                const domain = entry.domain;
+                const entryTime = new Date(entry.timestamp);
+
+                if (!seen.has(domain)) {
+                    // First time seeing this domain, keep it
+                    seen.set(domain, entryTime);
+                    cleanedHistory.push(entry);
+                } else {
+                    // Check if this entry is significantly different from the last one we kept
+                    const lastTime = seen.get(domain);
+                    const timeDiff = Math.abs(entryTime - lastTime);
+                    const fiveMinutes = 5 * 60 * 1000;
+
+                    if (timeDiff > fiveMinutes) {
+                        // More than 5 minutes apart, keep it
+                        seen.set(domain, entryTime);
+                        cleanedHistory.push(entry);
+                    }
+                    // Otherwise skip this duplicate entry
+                }
+            });
+
+            // Sort back to original order (newest first)
+            browsingHistory = cleanedHistory.sort((a, b) =>
+                new Date(b.timestamp) - new Date(a.timestamp)
+            );
+
+            chrome.storage.local.set({ browsingHistory });
+            displayHistory();
+            displayTopWebsites();
+
+            const removedCount = sortedHistory.length - cleanedHistory.length;
+            alert(`Đã xóa ${removedCount} entries trùng lặp!`);
+        }
+    }
+
+    // Helper functions
+    function filterHistory(history, filter) {
+        const now = new Date();
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const weekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
+
+        switch (filter) {
+            case 'high-risk':
+                return history.filter(h => ['HIGH', 'VERY HIGH'].includes(h.riskLevel));
+            case 'today':
+                return history.filter(h => new Date(h.timestamp) >= today);
+            case 'week':
+                return history.filter(h => new Date(h.timestamp) >= weekAgo);
+            default:
+                return history;
+        }
+    }
+
+    function getTopRiskySites(history, period) {
+        const filtered = filterByPeriod(history, period);
+        const siteStats = {};
+
+        filtered.forEach(entry => {
+            if (!siteStats[entry.domain]) {
+                siteStats[entry.domain] = {
+                    domain: entry.domain,
+                    visits: 0,
+                    totalRisk: 0,
+                    totalCookies: 0,
+                    riskLevels: []
+                };
+            }
+
+            const stats = siteStats[entry.domain];
+            stats.visits++;
+            stats.totalRisk += entry.riskScore * 100;
+            stats.totalCookies += entry.cookieCount;
+            stats.riskLevels.push(entry.riskLevel);
+        });
+
+        return Object.values(siteStats)
+            .map(stats => ({
+                ...stats,
+                avgRisk: stats.totalRisk / stats.visits,
+                riskLevel: getMostFrequentRiskLevel(stats.riskLevels)
+            }))
+            .sort((a, b) => b.avgRisk - a.avgRisk)
+            .slice(0, 10);
+    }
+
+    function filterByPeriod(history, period) {
+        const now = new Date();
+        switch (period) {
+            case 'week':
+                const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+                return history.filter(h => new Date(h.timestamp) >= weekAgo);
+            case 'month':
+                const monthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+                return history.filter(h => new Date(h.timestamp) >= monthAgo);
+            default:
+                return history;
+        }
+    }
+
+    function getMostFrequentRiskLevel(levels) {
+        const counts = {};
+        levels.forEach(level => counts[level] = (counts[level] || 0) + 1);
+        return Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
+    }
+
+    function getRiskColor(level) {
+        const colors = {
+            'VERY LOW': '#4caf50',
+            'LOW': '#8bc34a',
+            'AVERAGE': '#ffeb3b',
+            'HIGH': '#ff9800',
+            'VERY HIGH': '#f44336',
+            'TRUSTED': '#4caf50',
+            'BLOCKED': '#f44336',
+            'UNKNOWN': '#9e9e9e'
+        };
+        return colors[level] || colors['UNKNOWN'];
+    }
+
+    function formatTime(timestamp) {
+        const date = new Date(timestamp);
+        const now = new Date();
+        const diff = now - date;
+        const minutes = Math.floor(diff / 60000);
+        const hours = Math.floor(diff / 3600000);
+        const days = Math.floor(diff / 86400000);
+
+        if (minutes < 1) return 'Vừa xong';
+        if (minutes < 60) return `${minutes} phút trước`;
+        if (hours < 24) return `${hours} giờ trước`;
+        if (days < 7) return `${days} ngày trước`;
+        return date.toLocaleDateString('vi-VN');
+    }
+
+    function getStatusBadge(status) {
+        return '';
+    }
+
+    function isValidDomain(domain) {
+        const regex = /^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]?\.[a-zA-Z]{2,}$/;
+        return regex.test(domain);
+    }
+
+    // Extend displayWebsiteRisk to save history - use a different approach
+    function saveToHistoryAfterPrediction(websiteRisk, riskDistribution) {
+        try {
+            // Save to browsing history
+            chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+                if (tabs && tabs[0] && tabs[0].url) {
+                    try {
+                        const domain = new URL(tabs[0].url).hostname;
+                        const cookieCount = Object.values(riskDistribution || {}).reduce((sum, count) => sum + (count || 0), 0);
+
+                        if (typeof saveBrowsingHistory === 'function') {
+                            saveBrowsingHistory(domain, {
+                                score: websiteRisk.score || 0,
+                                level: websiteRisk.level || 'UNKNOWN',
+                                cookieCount: cookieCount,
+                                distribution: riskDistribution || {}
+                            });
+                        }
+                    } catch (e) {
+                        console.error('Error processing browsing history data:', e);
+                    }
+                }
+            });
+        } catch (e) {
+            console.error('Error in saveToHistoryAfterPrediction:', e);
+        }
+    }
+
+});
